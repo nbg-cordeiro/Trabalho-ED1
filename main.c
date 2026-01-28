@@ -1,6 +1,4 @@
-#include "headers/auxiliares.h"
-#include <stdio.h>
-#include <stdlib.h>
+#include "auxiliares.h"
 
 int menuPrincipal(void);
 
