@@ -1,7 +1,29 @@
 #include "auxiliares.c"
+#include <stdio.h>
+#include <stdlib.h>
 
-void menuPrincipal(){
-    int opcao;
+int menuPrincipal(void);
+
+int main ()
+{
+    Node* listaClientes = NULL; // lerClientes(); tem que criar esse carinha
+    Node* listaProdutos = NULL; // lerProdutos(); e esse aqui também
+    
+    int opcao = menuPrincipal();
+
+    switch(opcao)
+    {
+        case 4:
+            // salvarClientes(listaClientes); tem que colocar esse menininho
+            // salvarLista(listaProdutos); esse menininho também
+            freeLista(&listaClientes);
+            freeLista(&listaProdutos);
+        break;
+    }
+}
+
+int menuPrincipal(void){
+    int opcao=-1;
     do{
         printf("\n====== MENU PRINCIPAL ======\n");
         printf("1 - Gerenciamento de clientes\n");
@@ -14,28 +36,10 @@ void menuPrincipal(){
 
         if(controle!=1 || opcao<1 || opcao>4){
             limpaConsole();
-            printf("\nInput Invalido! Tente novamente.\n");
+            perror("\nInput Invalido! Tente novamente.\n");
             opcao = -1;
         }
     }while(opcao<1 || opcao>4);
     
-    switch(opcao){
-        case 1:
-            //colocar menuClientes
-            break;
-        case 2:
-            //colocar menuProdutos
-            break;
-        case 3:
-            //colocar menuCompra
-            break;
-        case 4:
-            //colocar codigo de saida
-            break;
-    }
-}
-
-int main ()
-{
-    menuPrincipal();
+    return opcao;
 }
