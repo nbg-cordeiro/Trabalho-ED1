@@ -12,14 +12,14 @@
 - Certifique-se que o terminal está aberto na raiz do projeto.
 ### Windows (Powershell):
 ```bash
-    gcc *.c -Wall -I./headers -o programa.exe 
-    ./programa.exe
+    gcc nucleo/*.c -Wall -I./headers -o app.exe 
+    ./app.exe
 ```
 
 ### Linux:
 ```bash
-    gcc *.c -Wall -I./headers -o programa
-    ./programa
+    gcc nucleo/*.c -Wall -I./headers -o app
+    ./app
 ```
 
 ---
