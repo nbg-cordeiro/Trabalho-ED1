@@ -12,5 +12,6 @@ void editarCliente(Cliente*);
 Cliente buscarCPF(Node*);
 void removerCliente(Node*, Cliente);
 Cliente criarCliente(char*,char*,char*);
+void criarCarrinho(Cliente*);
 
 #endif
