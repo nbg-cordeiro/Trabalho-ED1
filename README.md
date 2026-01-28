@@ -6,6 +6,24 @@
 - João Pedro da Nóbrega S.C. (251023184)
 - Eduardo de Sousa Brito (251020226) 
 
+---
+
+## Como compilar e executar:
+- Certifique-se que o terminal está aberto na raiz do projeto.
+# Windows (Powershell):
+```bash
+    gcc *.c -Wall -I./headers -o programa.exe 
+    ./programa.exe
+```
+
+# Linux:
+```bash
+    gcc *.c -Wall -I./headers -o programa
+    ./programa
+```
+
+---
+
 ## Descrição
 
 Uma empresa de pequeno porte deseja informatizar o controle básico de **clientes** e **produtos** por meio de uma aplicação simples executada no **terminal**.
