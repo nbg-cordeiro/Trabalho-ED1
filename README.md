@@ -10,13 +10,13 @@
 
 ## Como compilar e executar:
 - Certifique-se que o terminal está aberto na raiz do projeto.
-# Windows (Powershell):
+### Windows (Powershell):
 ```bash
     gcc *.c -Wall -I./headers -o programa.exe 
     ./programa.exe
 ```
 
-# Linux:
+### Linux:
 ```bash
     gcc *.c -Wall -I./headers -o programa
     ./programa
