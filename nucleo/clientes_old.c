@@ -63,29 +63,29 @@ void removerCliente(){
 
 
 // TESTES 
-int main(){
-    int TAMN = 4;
-    modeloCliente debug_listaCliente[TAMN];
+// int main(){
+//     int TAMN = 4;
+//     modeloCliente debug_listaCliente[TAMN];
 
-    // cliente teste 1
-    strcpy(debug_listaCliente[0].nome,"Eduardo do bem");
-    strcpy(debug_listaCliente[0].cpf,"111.111.111-11");
-    strcpy(debug_listaCliente[0].telefone,"+5561912345678");
+//     // cliente teste 1
+//     strcpy(debug_listaCliente[0].nome,"Eduardo do bem");
+//     strcpy(debug_listaCliente[0].cpf,"111.111.111-11");
+//     strcpy(debug_listaCliente[0].telefone,"+5561912345678");
 
-    // cliente teste 2
-    strcpy(debug_listaCliente[1].nome,"Eduardo do mal");
-    strcpy(debug_listaCliente[1].cpf,"222.222.222-22");
-    strcpy(debug_listaCliente[1].telefone,"+5561987654321");
+//     // cliente teste 2
+//     strcpy(debug_listaCliente[1].nome,"Eduardo do mal");
+//     strcpy(debug_listaCliente[1].cpf,"222.222.222-22");
+//     strcpy(debug_listaCliente[1].telefone,"+5561987654321");
 
-    strcpy(debug_listaCliente[2].nome,"Joao do bem");
-    strcpy(debug_listaCliente[2].cpf,"333.333.333-33");
-    strcpy(debug_listaCliente[2].telefone,"+5561912345679");
+//     strcpy(debug_listaCliente[2].nome,"Joao do bem");
+//     strcpy(debug_listaCliente[2].cpf,"333.333.333-33");
+//     strcpy(debug_listaCliente[2].telefone,"+5561912345679");
 
-    strcpy(debug_listaCliente[3].nome,"Joao do mal");
-    strcpy(debug_listaCliente[3].cpf,"444.444.444-44");
-    strcpy(debug_listaCliente[3].telefone,"+5561997654321");
+//     strcpy(debug_listaCliente[3].nome,"Joao do mal");
+//     strcpy(debug_listaCliente[3].cpf,"444.444.444-44");
+//     strcpy(debug_listaCliente[3].telefone,"+5561997654321");
 
-    listarClientes(debug_listaCliente,TAMN);
-    buscarCPF(debug_listaCliente,TAMN,debug_listaCliente[2].cpf);
+//     listarClientes(debug_listaCliente,TAMN);
+//     buscarCPF(debug_listaCliente,TAMN,debug_listaCliente[2].cpf);
 
-}
+// }

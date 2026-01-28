@@ -1,4 +1,5 @@
 #include "auxiliares.h"
+#include "produtos.h"
 
 int menuPrincipal(void);
 
@@ -7,6 +8,8 @@ int main ()
     Node* listaClientes = NULL; // lerClientes(); tem que criar esse carinha
     Node* listaProdutos = NULL; // lerProdutos(); e esse aqui também
     
+    criarProduto();
+
     int opcao = menuPrincipal();
 
     switch(opcao)
