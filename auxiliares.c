@@ -1,15 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-typedef struct Node{
-    void* conteudo;
-    struct Node* proximo;
-    struct Node* anterior;
-} Node;
-
-void limpaBuffer(void);
-void limpaConsole(void);
-void freeLista(Node** lista);
+#include "auxiliares.h"
 
 void freeLista(Node** lista){
     while((*lista) != NULL){

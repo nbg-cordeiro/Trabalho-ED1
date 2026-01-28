@@ -1,4 +1,4 @@
-#include "auxiliares.c"
+#include "headers/auxiliares.h"
 #include <stdio.h>
 #include <stdlib.h>
 
