@@ -17,5 +17,6 @@ void freeLista(Node** lista);
 void salvarLista(Node*);
 Node* lerLista(char);
 Node* criarNode();
+char* lerString();
 
 #endif
