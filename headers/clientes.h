@@ -1,5 +1,6 @@
 #ifndef CLIENTE_H
 #define CLIENTE_H
+#include "auxiliares.h"
 
 typedef struct Cliente{
     char* cpf;
