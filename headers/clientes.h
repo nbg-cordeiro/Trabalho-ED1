@@ -12,10 +12,10 @@ typedef struct Cliente{
     Node* carrinho;
 }Cliente;
 
-void editarCliente(Cliente*);
+void editarCliente(Cliente**);
 Cliente buscarCPF(char*);
 void removerCliente(Node*, Cliente);
-void criarCliente();
+Cliente* criarCliente();
 void criarCarrinho(Cliente*);
 
 #endif

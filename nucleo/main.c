@@ -4,6 +4,7 @@
 
 int menuPrincipal(void);
 void menuProdutos(void);
+void menuClientes(void);
 
 int main ()
 {
@@ -53,6 +54,49 @@ void menuProdutos(){
     case 1:
         criarProduto();                   //quero fazer algo assim: adicionarProduto(lista, criarProduto()); "Ah mas isso é BURRO" eu também acho!
         break;
+    default:
+        return;
+        break;
+    }
+}
+
+void menuClientes(){
+    int opcao = -1;
+    do{
+        printf("\n====== MENU Clientes ======\n");
+        printf("1 - Cadastrar cliente\n");
+        printf("2 - Listar clientes\n");
+        printf("3 - Buscar cliente pelo CPF\n");
+        printf("4 - Editar dados de um cliente\n");
+        printf("5 - Remover um cliente\n");
+        printf("6 - Voltar\n");
+        printf("Escolha uma opcao:\n");
+        int controle = scanf("%d", &opcao);
+        limpaBuffer();
+
+        if(controle!=1 || opcao<1 || opcao>4){
+            limpaConsole();
+            printf("\nInput Invalido! Tente novamente.\n");
+            opcao = -1;
+        }
+    }while(opcao<1 || opcao>4);
+
+    switch (opcao)
+    {
+    case 1:
+        // criarCliente();     // tem que lembrar que precisa jogar eles pra um node
+        break;
+    case 2:
+        break;
+    case 3:
+        break;
+    case 4:
+        // Opção de buscar por nome ou por cpf (quem errar os dois na hora de cadastrar é bobão)
+        break;
+    case 5:
+        break;
+    case 6:
+    
     default:
         return;
         break;
