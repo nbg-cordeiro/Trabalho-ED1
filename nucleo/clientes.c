@@ -1,5 +1,42 @@
 #include "clientes.h"
 
+// ===== NODES CLIENTE ===== //
+
+node_Cliente* criarNode(){
+    node_Cliente *nodeC = malloc(sizeof(node_Cliente));
+    if (nodeC == NULL){
+        perror("Erro ao alocar memória em criarNode().");
+        exit(EXIT_FAILURE);
+    }
+
+    nodeC->data = NULL;
+    nodeC->proximo = NULL;
+
+    return nodeC;
+}
+
+void InserirNode(node_Cliente **head, Cliente * dado){
+    node_Cliente *novo = criarNode();
+    if (novo == NULL){
+        perror("Erro ao alocar memória em InserirNode().");
+        exit(EXIT_FAILURE);
+    }
+
+    novo->data = dado;
+
+    if (head == NULL){
+        *head = novo;
+        return;
+    }
+
+    node_Cliente *temp = *head;
+    while (temp->proximo != NULL){
+        temp = temp->proximo;
+    }
+    temp->proximo = novo;
+}
+
+
 // ===== REMOVER CLIENTE ===== //
 
 void freeCliente(Cliente** cliente){
@@ -142,6 +179,3 @@ Cliente* criarCliente(){
     return novoCliente;
 }
 
-void node_inserirCliente(Cliente** clienteAtual, Cliente** clienteProximo, Cliente** clienteAnterior){ // (conteudo, proxima, anterior)
-    // Node nodeCliente;
-}

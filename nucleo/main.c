@@ -8,8 +8,8 @@ void menuClientes(void);
 
 int main ()
 {
-    Node* listaClientes = NULL; // lerClientes(); tem que criar esse carinha
-    Node* listaProdutos = NULL; // lerProdutos(); e esse aqui também
+    node_Cliente* listaClientes = NULL; // lerClientes(); tem que criar esse carinha
+    node_Produto* listaProdutos = NULL; // lerProdutos(); e esse aqui também
     
     criarProduto(); // isso é só pra testar o menu
     while(1){

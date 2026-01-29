@@ -16,7 +16,7 @@ char* lerString(void);
 void freeLista(Node** lista);
 void salvarLista(Node*);
 Node* lerLista(char);
-Node* criarNode();
+//Node* criarNode();    rest in piss :sob:
 char* lerString();
 
 #endif
