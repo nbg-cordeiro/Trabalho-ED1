@@ -8,7 +8,7 @@ typedef struct Produto{
     double preco;
 }Produto;
 
-Produto criarProduto();
+Produto* criarProduto();
 void imprimirProduto(Produto*);
 void editarProduto(Produto*);
 void removerProduto(Node*, Produto*);

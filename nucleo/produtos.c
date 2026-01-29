@@ -10,16 +10,16 @@ void freeProduto(Produto** produto){
     (*produto)=NULL;
 }
 
-Produto criarProduto(){
-    Produto novoProduto;
+Produto* criarProduto(){
+    Produto* novoProduto = malloc(sizeof(Produto));
 
     printf("Novo produto:\nCodigo: ");
     char* codigo = lerString();
-    novoProduto.codigo=codigo;
+    novoProduto->codigo=codigo;
 
     printf("Nome: ");
     char* nome = lerString();
-    novoProduto.nome=nome;
+    novoProduto->nome=nome;
 
     double preco;
     do{
@@ -32,7 +32,7 @@ Produto criarProduto(){
         }
     }while(preco<=0);
 
-    novoProduto.preco = preco;
+    novoProduto->preco = preco;
     printf("Produto (");
     imprimirProduto(&novoProduto);
     printf(") cadastrado com sucesso!\n");
