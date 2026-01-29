@@ -28,9 +28,12 @@ int menu_editarCliente(void){
     return opcao;
 }
 
-void menu_modificarDado(char texto, char * dado){
-    printf("\n====== GERENCIAMENTO DE CLIENTES | EDITAR CLIENTE ======\n");
-    printf("Digite o nome do cliente: ");
+void menu_modificarDado(const char * texto, char * dado){
+    printf("\n====== GERENCIAMENTO DE CLIENTES | %s ======\n", texto);
+    printf("Insira novo valor: ");
+
+    // usar o fgets do joao :>
+    // verificar se não mudou o dado para um espaço vazio (ex.: " ")
 
 }
 
@@ -43,13 +46,13 @@ void editarCliente(Cliente * cliente){
         menu_modificarDado("EDITAR NOME DO CLIENTE",cliente->nome);
         break;
     case 2:
-        menu_modificarDado("EDITAR CPF DO CLIENTE",cliente->nome);
+        menu_modificarDado("EDITAR CPF DO CLIENTE",cliente->cpf);
         break;
     case 3:
-        menu_modificarDado("EDITAR TELEFONE DO CLIENTE",cliente->nome);
+        menu_modificarDado("EDITAR TELEFONE DO CLIENTE",cliente->telefone);
         break;
     case 4:
-        menu_modificarDado("EDITAR DATA DE NASCIMENTO DO CLIENTE",cliente->nome);
+        menu_modificarDado("EDITAR DATA DE NASCIMENTO DO CLIENTE",cliente->dataNascimento);
         break;
     case 5:
         // voltar pro gerenciamento de cliente
