@@ -3,23 +3,58 @@
 #include "clientes.h"
 
 int menuPrincipal(void);
+void menuProdutos(void);
 
 int main ()
 {
     Node* listaClientes = NULL; // lerClientes(); tem que criar esse carinha
     Node* listaProdutos = NULL; // lerProdutos(); e esse aqui também
     
-    criarProduto();
+    criarProduto(); // isso é só pra testar o menu
+    while(1){
+        int opcao = menuPrincipal();
+        limpaConsole();
+        switch(opcao)
+        {
+            case 2: menuProdutos(); break;
+            case 4:
+                // salvarClientes(listaClientes); tem que colocar esse menininho
+                // salvarLista(listaProdutos); esse menininho também
+                freeLista(&listaClientes);
+                freeLista(&listaProdutos);
+                printf("Saindo...");
+                exit(EXIT_SUCCESS);
+            break;
+        }
+    }
+}
 
-    int opcao = menuPrincipal();
+void menuProdutos(){
+    int opcao=-1;
+    do{
+        printf("\n====== MENU PRODUTOS ======\n");
+        printf("1 - Cadastrar produto\n");
+        printf("2 - Listar produtos\n");
+        printf("3 - Buscar produto pelo codigo\n");
+        printf("4 - Editar dados de um produto\n");
+        printf("5 - Remover um produto\n");
+        printf("6 - Voltar\n");
 
-    switch(opcao)
+        int controle = scanf("%d", &opcao);
+        limpaBuffer();
+        limpaConsole();
+        if(controle!=1 || opcao>6 || opcao<1){
+            opcao=-1;
+            printf("Entrada invalida!\n");
+        }
+    }while(opcao<1 || opcao>6);
+    switch (opcao)
     {
-        case 4:
-            // salvarClientes(listaClientes); tem que colocar esse menininho
-            // salvarLista(listaProdutos); esse menininho também
-            freeLista(&listaClientes);
-            freeLista(&listaProdutos);
+    case 1:
+        criarProduto();                   //quero fazer algo assim: adicionarProduto(lista, criarProduto()); "Ah mas isso é BURRO" eu também acho!
+        break;
+    default:
+        return;
         break;
     }
 }
@@ -38,7 +73,7 @@ int menuPrincipal(void){
 
         if(controle!=1 || opcao<1 || opcao>4){
             limpaConsole();
-            perror("\nInput Invalido! Tente novamente.\n");
+            printf("\nInput Invalido! Tente novamente.\n");
             opcao = -1;
         }
     }while(opcao<1 || opcao>4);
