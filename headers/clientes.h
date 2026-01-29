@@ -5,6 +5,7 @@ typedef struct Cliente{
     char* cpf;
     char* nome;
     char* telefone;
+    char* dataNascimento;
     Node* carrinho;
 }Cliente;
 
