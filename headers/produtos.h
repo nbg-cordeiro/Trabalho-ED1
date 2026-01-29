@@ -8,10 +8,11 @@ typedef struct Produto{
     double preco;
 }Produto;
 
-void criarProduto();
-char* ProdToString(Produto*);
+Produto* criarProduto();
+void imprimirProduto(Produto*);
 void editarProduto(Produto*);
 void removerProduto(Node*, Produto*);
 void listarProdutos(Node*);
+void freeProduto(Produto**);
 
 #endif
