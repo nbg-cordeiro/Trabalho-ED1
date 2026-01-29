@@ -1,6 +1,8 @@
 #ifndef CLIENTE_H
 #define CLIENTE_H
+
 #include "auxiliares.h"
+#include <string.h>
 
 typedef struct Cliente{
     char* cpf;
@@ -11,9 +13,9 @@ typedef struct Cliente{
 }Cliente;
 
 void editarCliente(Cliente*);
-Cliente buscarCPF(Node*);
+Cliente buscarCPF(char*);
 void removerCliente(Node*, Cliente);
-Cliente criarCliente(char*,char*,char*);
+void criarCliente();
 void criarCarrinho(Cliente*);
 
 #endif

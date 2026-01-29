@@ -1,5 +1,6 @@
 #include "auxiliares.h"
 #include "produtos.h"
+#include "clientes.h"
 
 int menuPrincipal(void);
 
