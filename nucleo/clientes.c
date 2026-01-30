@@ -1,5 +1,15 @@
 #include "clientes.h"
 
+/* checklist
+
+cadastrar cliente:          ok
+listar todos os clientes:   ok
+buscar cliente pelo cpf:    precisa testar
+editar dados de um cliente: pecisa testar
+remover cliente:            pendente
+
+*/
+
 // ===== NODES CLIENTE ===== //
 
 void InserirNode(node_Cliente *head, Cliente * dado){
@@ -18,8 +28,12 @@ void InserirNode(node_Cliente *head, Cliente * dado){
 // ===== CRIAR CLIENTE ===== //
 
 void imprimeCliente(Cliente * cliente){
-    printf("%s | %s | %s | %s\n", cliente->nome, cliente->cpf, cliente->telefone, cliente->dataNascimento);
-    printf("--------------------");
+    printf("%s\n", cliente->nome);
+    printf("- CPF: %s\n", cliente->cpf);
+    printf("- Telefone: %s\n", cliente->telefone);
+    printf("- Data de Nascimento: %s", cliente->dataNascimento);
+
+    printf("\n============================\n");
 }
 
 void criarCliente(node_Cliente *head){
@@ -172,6 +186,24 @@ node_Cliente* buscarCPF(char* cpf, node_Cliente **head){
     return NULL;
 }
 
+// ===== IMPRIMIR CLIENTES ===== //
+
+void imprimirClientes(node_Cliente **head){
+    printf("\n====== LISTA CLIENTES ======\n");
+
+    if (*head == NULL){
+        printf("Nenhum cliente cadastrado.");
+        printf("\n============================\n");
+        return;
+    }
+
+    node_Cliente *p;
+    for (p = (*head)->proximo; p != NULL; p = p->proximo){
+        imprimeCliente(p->data);
+    }
+
+}
+
 // ===== REMOVER CLIENTE ===== //
 
 void freeCliente(Cliente** cliente){
@@ -202,5 +234,33 @@ void free_ListaClientes(node_Cliente** lista){
         free(atual);
 
         atual = prox;
+    }
+}
+
+void removerCliente(node_Cliente** head){
+    if (head == NULL || (*head) == NULL){
+        return;
+    }
+
+    printf("\nRemover Cliente:\n");
+    printf("Não utilize nenhuma acentuação ('/', '-', '.') ou espaçamento.");
+    printf("- Digite o CPF do cliente: ");
+    char * temp = NULL;
+    temp = lerString();
+
+    node_Cliente * lixo = NULL;
+    lixo = buscarCPF(temp, head);
+    node_Cliente *anterior;
+
+    anterior = (*head);
+    
+    while (anterior != NULL && anterior->proximo != lixo){
+        anterior = anterior->proximo;
+    }
+
+    if (anterior != NULL){
+        anterior->proximo = lixo->proximo;
+        freeCliente(&lixo->data);
+        free(lixo);
     }
 }
