@@ -17,6 +17,6 @@ void freeLista(Node** lista);
 void salvarLista(Node*);
 Node* lerLista(char);
 Node* criarNode();
-char* lerString();
+int compararString(char*, char*);
 
 #endif
