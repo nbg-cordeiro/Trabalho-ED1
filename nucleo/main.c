@@ -120,54 +120,10 @@ void menuProdutos(NodeProduto** lista){
         {
             case 1:adicionarProduto(lista);break;
             case 2:listarProdutos(*lista);break;
-            case 3:
-                printf("Insira o codigo do produto: ");
-                char* codigo1 = lerString();
-                NodeProduto** produto1 = (buscarProduto(lista, codigo1));
-                free(codigo1);
-                if(produto1==NULL || (*produto1)==NULL){
-                    printf("Produto nao encontrado!\n");
-                    printf("Pressione qualquer tecla para continuar.\n");
-                    getchar();
-                    break;
-                }
-                printf("Produto:\n");
-                imprimirProduto((*produto1)->produto);
-                printf("\n");
-                getchar();
-                printf("Pressione qualquer tecla para continuar.\n");
-                break;
-            case 4:
-                printf("Insira o codigo do produto: ");
-                char* codigo2 = lerString();
-                NodeProduto** produto2 = (buscarProduto(lista, codigo2));
-                free(codigo2);
-                if(produto2==NULL || (*produto2)==NULL){
-                    printf("Produto nao encontrado!\n");
-                    printf("Pressione qualquer tecla para continuar.\n");
-                    getchar();
-                    break;
-                }
-                editarProduto(produto2);
-                break;
-            case 5:
-                printf("Insira o codigo do produto: ");
-                char* codigo3 = lerString();
-                NodeProduto** produto3 = (buscarProduto(lista, codigo3));
-                free(codigo3);
-                if(produto3==NULL || (*produto3)==NULL){
-                    printf("Produto nao encontrado!\n");
-                    printf("Pressione qualquer tecla para continuar.\n");
-                    getchar();
-                    break;
-                }
-                removerProduto(produto3);
-                printf("Produto removido com sucesso!\n");
-                printf("Pressione qualquer tecla para continuar.\n");
-                getchar();
-                break;
-            default:
-                return;
+            case 3:imprimePorCodigo(lista);break;
+            case 4:editarProduto(lista);break;
+            case 5:removerProduto(lista);break;
+            case 6:return;
         }
     }
 }
