@@ -2,6 +2,7 @@
 #define CLIENTE_H
 
 #include "auxiliares.h"
+#include "produtos.h"
 #include <string.h>
 
 typedef struct Cliente{
@@ -9,7 +10,7 @@ typedef struct Cliente{
     char* nome;
     char* telefone;
     char* dataNascimento;
-    Node* carrinho;
+    NodeProduto* carrinho;
 }Cliente;
 
 typedef struct node_Cliente{
@@ -20,7 +21,7 @@ typedef struct node_Cliente{
 
 void editarCliente(Cliente**);
 node_Cliente* buscarCPF(char*, node_Cliente**);
-void removerCliente(Node*, Cliente);
+void removerCliente(node_Cliente**, Cliente);
 void criarCliente(node_Cliente *);
 void criarCarrinho(Cliente*);
 void free_ListaClientes(node_Cliente**);
