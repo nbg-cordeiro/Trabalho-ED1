@@ -9,10 +9,13 @@ void menu_editaClientes();
 
 int main ()
 {
-    node_Cliente* listaClientes = NULL; // lerClientes(); tem que criar esse carinha
+    node_Cliente* listaClientes = malloc(sizeof(node_Cliente)); // lerClientes(); tem que criar esse carinha
+    listaClientes->data = NULL;
+    listaClientes->proximo = NULL;
+    //listaClientes = malloc(sizeof(node_Cliente));
     Node* listaProdutos = NULL; // lerProdutos(); e esse aqui também
     
-    criarProduto(); // isso é só pra testar o menu
+    //criarCliente(listaClientes); // isso é só pra testar o menu
     while(1){
         int opcao = menuPrincipal();
         limpaConsole();
@@ -23,7 +26,7 @@ int main ()
             case 4:
                 // salvarClientes(listaClientes); tem que colocar esse menininho
                 // salvarLista(listaProdutos); esse menininho também
-                free_ListaCliente(&listaClientes);
+                free_ListaClientes(&listaClientes);
                 freeLista(&listaProdutos);
                 printf("Saindo...");
                 exit(EXIT_SUCCESS);

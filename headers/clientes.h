@@ -19,10 +19,10 @@ typedef struct node_Cliente{
 }node_Cliente;
 
 void editarCliente(Cliente**);
-Cliente buscarCPF(char*);
+node_Cliente* buscarCPF(char*, node_Cliente**);
 void removerCliente(Node*, Cliente);
-void criarCliente(node_Cliente **);
+void criarCliente(node_Cliente *);
 void criarCarrinho(Cliente*);
-void free_ListaCliente(node_Cliente** lista);
+void free_ListaClientes(node_Cliente**);
 
 #endif
