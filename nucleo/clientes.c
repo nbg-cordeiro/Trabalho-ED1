@@ -1,16 +1,12 @@
 #include "clientes.h"
 
-/* checklist
+/* to-do
 
-cadastrar cliente:          ok
-listar todos os clientes:   ok
-buscar cliente pelo cpf:    precisa testar
-editar dados de um cliente: pecisa testar
-remover cliente:            precisa testar
+fazer uma verificação de dados tanto pro criarCliente() como pro editarCliente()
+mudar cpf, telefone e nascimento pra int
 
 */
 
-// ===== NODES CLIENTE ===== //
 
 void InserirNode(node_Cliente *head, Cliente * dado){
     node_Cliente *novo = malloc(sizeof(node_Cliente));
@@ -25,8 +21,6 @@ void InserirNode(node_Cliente *head, Cliente * dado){
     head->proximo = novo;
 }
 
-// ===== CRIAR CLIENTE ===== //
-
 void imprimeCliente(Cliente * cliente){
     printf("%s\n", cliente->nome);
     printf("- CPF: %s\n", cliente->cpf);
@@ -34,6 +28,22 @@ void imprimeCliente(Cliente * cliente){
     printf("- Data de Nascimento: %s", cliente->dataNascimento);
 
     printf("\n============================\n");
+}
+
+void imprimirClientes(node_Cliente **head){
+    printf("\n====== LISTA CLIENTES ======\n");
+
+    if ((*head)->proximo == NULL){
+        printf("Nenhum cliente cadastrado.");
+        printf("\n============================\n");
+        return;
+    }
+
+    node_Cliente *p;
+    for (p = (*head)->proximo; p != NULL; p = p->proximo){
+        imprimeCliente(p->data);
+    }
+
 }
 
 void criarCliente(node_Cliente *head){
@@ -69,42 +79,19 @@ void criarCliente(node_Cliente *head){
     InserirNode(head,novoCliente);
 }
 
-// ===== EDITAR CLIENTE ===== //
+void editarCliente(node_Cliente *head){
 
-void menu_modificarDado(int * opcao, char * dado){
-    free(dado); // limpar o que tinha antes
+    printf("Nao utilize pontuacoes ('/' '.' '-') ou espaco.\n");
+    printf("Digite o CPF do cliente: ");
+    char *cpf = lerString();
+    node_Cliente *cliente = buscarCPF(cpf,head);
+    free(cpf);
 
-    switch (*opcao)
-    {
-    case 1:
-        printf("Digite nome: ");
-        break;
-    case 2:
-        printf("Insira o dado sem utilizar pontuacoes ('/' '.' '-') ou espaco.");
-        printf("Digite CPF: ");
-        break;
-    case 3:
-        printf("Insira o dado sem utilizar pontuacoes ('/' '.' '-') ou espaco.");
-        printf("Digite numero de telefone: ");
-        break;
-    case 4:
-        printf("Insira o dado sem utilizar pontuacoes ('/' '.' '-') ou espaco.");
-        printf("Digite data de nascimento: ");
-        break;
-    }
-
-    char* novo_dado = lerString();  // seria uma boa fazer um temp caso o usuario insira um nome invalido ou o lerstring() der null?
-    dado = novo_dado;
-
-    printf("\nDado atualizado com exito.\n");
-
-}
-
-void editarCliente(Cliente** cliente){
     if (cliente == NULL){
-        printf("Cliente não existe.");
+        printf("Cliente nao cadastrado no sistema.");
         return;
     }
+    
     while (1){
         int opcao=-1;
         do{
@@ -130,47 +117,52 @@ void editarCliente(Cliente** cliente){
         switch (opcao)
         {
         case 1:
-            // menu_modificarDado(opcao,cliente->nome);
             printf("Digite nome: ");
+
             temp = lerString();
-            free((*cliente)->nome);
-            (*cliente)->nome = temp;
+
+            free((cliente)->data->nome);
+            (cliente)->data->nome = temp;
             break;
         case 2:
-            // menu_modificarDado(opcao,cliente->cpf);
-            printf("Insira o dado sem utilizar pontuacoes ('/' '.' '-') ou espaco.");
-            printf("Digite CPF: ");
-            temp = lerString();
-            free((*cliente)->cpf);
-            (*cliente)->cpf = temp;
+            printf("Digite novo CPF: ");
+            do{
+                temp = lerString();
+                if (buscarCPF(temp,head) != NULL){
+                    printf("Esse CPF ja esta cadastrado.\n");
+                    free(temp);
+                    temp = NULL;
+                }
+            } while (temp != NULL);
+
+            free((cliente)->data->cpf);
+            (cliente)->data->cpf = temp;
             break;
         case 3:
-        // menu_modificarDado(opcao,cliente->telefone);
-            printf("Insira o dado sem utilizar pontuacoes ('/' '.' '-') ou espaco.");
-            printf("Digite numero de telefone: ");
+            printf("Digite novo telefone: ");
+            
             temp = lerString();
-            free((*cliente)->telefone);
-            (*cliente)->telefone = temp;
+
+            free((cliente)->data->telefone);
+            (cliente)->data->telefone = temp;
             break;
         case 4:
-            // menu_modificarDado(opcao,cliente->dataNascimento);
-            printf("Insira o dado sem utilizar pontuacoes ('/' '.' '-') ou espaco.");
-            printf("Digite data de nascimento: ");
+            printf("Digite nova Data de Nascimento: ");
+            
             temp = lerString();
-            free((*cliente)->dataNascimento);
-            (*cliente)->dataNascimento = temp;
+
+            free((cliente)->data->dataNascimento);
+            (cliente)->data->dataNascimento = temp;
             break;
         default:
             return;
         }
     
-    // printf("\nDado atualizado com exito.\n");
+    printf("\nDado atualizado com exito.\n\n");
+    imprimeCliente(cliente->data);
     }
     
 }
-
-
-// ===== BUSCAR CLIENTE ===== //
 
 node_Cliente* buscarCPF(char* cpf, node_Cliente *head){
     if (cpf == NULL){
@@ -194,25 +186,29 @@ node_Cliente* buscarCPF(char* cpf, node_Cliente *head){
     return NULL;
 }
 
-// ===== IMPRIMIR CLIENTES ===== //
 
-void imprimirClientes(node_Cliente **head){
-    printf("\n====== LISTA CLIENTES ======\n");
+void buscarCliente(node_Cliente **head){
+    printf("\nBuscar Cliente:\n");
+    printf("Nao utilize nenhuma acentuacao ('/', '-', '.') ou espacamento.\n");
+    printf("- Digite o CPF do cliente: ");
 
-    if (*head == NULL){
-        printf("Nenhum cliente cadastrado.");
-        printf("\n============================\n");
+    char * temp = NULL;
+    temp = lerString();
+    if (temp == NULL){
+        return;
+    }
+    node_Cliente *cliente = buscarCPF(temp, (*head));
+    if (cliente == NULL){
+        printf("Cliente não foi encontrad.");
         return;
     }
 
-    node_Cliente *p;
-    for (p = (*head)->proximo; p != NULL; p = p->proximo){
-        imprimeCliente(p->data);
-    }
+    printf("\n====== BUSCAR CLIENTE ======\n");
+    imprimeCliente(cliente->data);
+    free(temp);
 
+    return;
 }
-
-// ===== REMOVER CLIENTE ===== //
 
 void freeCliente(Cliente** cliente){
     free((*cliente)->nome);
@@ -226,32 +222,13 @@ void freeCliente(Cliente** cliente){
 
 }
 
-void free_ListaClientes(node_Cliente** lista){
-    if (lista == NULL || (*lista) == NULL){
-        return;
-    }
-
-    node_Cliente* atual = (*lista);
-
-    while (atual != NULL){
-        node_Cliente* prox = atual->proximo;
-
-        if (atual->data != NULL){
-            freeCliente(&(atual->data));
-        }
-        free(atual);
-
-        atual = prox;
-    }
-}
-
 void removerCliente(node_Cliente** head){
     if (head == NULL || (*head) == NULL){
         return;
     }
 
     printf("\nRemover Cliente:\n");
-    printf("Nao utilize nenhuma acentuacao ('/', '-', '.') ou espacamento.");
+    printf("Nao utilize nenhuma acentuacao ('/', '-', '.') ou espacamento.\n");
     printf("- Digite o CPF do cliente: ");
 
     char * temp = NULL;
@@ -287,4 +264,23 @@ void removerCliente(node_Cliente** head){
     freeCliente(&(delete->data));
     free(delete);
     free(temp);
+}
+
+void free_ListaClientes(node_Cliente** lista){
+    if (lista == NULL || (*lista) == NULL){
+        return;
+    }
+
+    node_Cliente* atual = (*lista);
+
+    while (atual != NULL){
+        node_Cliente* prox = atual->proximo;
+
+        if (atual->data != NULL){
+            freeCliente(&(atual->data));
+        }
+        free(atual);
+
+        atual = prox;
+    }
 }
