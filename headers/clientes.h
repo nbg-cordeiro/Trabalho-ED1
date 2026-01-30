@@ -3,7 +3,6 @@
 
 #include "auxiliares.h"
 #include "produtos.h"
-#include <string.h>
 
 typedef struct Cliente{
     char* cpf;

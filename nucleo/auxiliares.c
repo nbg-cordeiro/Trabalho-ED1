@@ -55,6 +55,6 @@ int compararString(char* string1, char* string2){
 }
 
 void continuar(){
-    printf("\nPressione qualquer tecla para continuar.\n");
+    printf("\nPressione enter para continuar.\n");
     getchar();
 }

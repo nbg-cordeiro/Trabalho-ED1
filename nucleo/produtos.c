@@ -16,6 +16,11 @@ void imprimirProduto(Produto* produto){
 }
 
 void imprimePorCodigo(NodeProduto** lista){
+    if(lista == NULL || (*lista)==NULL){
+        printf("Nenhum produto cadastrado.\n");
+        continuar();
+        return;
+    }
     printf("Insira o codigo do produto: ");
     char* codigo1 = lerString();
     NodeProduto** produto1 = (buscarProduto(lista, codigo1));
@@ -32,8 +37,8 @@ void imprimePorCodigo(NodeProduto** lista){
 
 void listarProdutos(NodeProduto* lista){
     if(lista == NULL){
-        printf("Nenhum produto cadastrado.\nPressione qualquer tecla para continuar.\n");
-        getchar();
+        printf("Nenhum produto cadastrado.\n");
+        continuar();
         return;
     }
     int i = 1;
@@ -105,6 +110,11 @@ Produto* criarProduto(NodeProduto** lista){
 }
 
 void editarProduto(NodeProduto** lista){
+    if(lista == NULL || (*lista)==NULL){
+        printf("Nenhum produto cadastrado.\n");
+        continuar();
+        return;
+    }
     printf("Insira o codigo do produto: ");
     char* codigo = lerString();
     NodeProduto** node = (buscarProduto(lista, codigo));
@@ -117,7 +127,7 @@ void editarProduto(NodeProduto** lista){
     while(1){
         int opcao;
         do{
-            printf("Qual informação gostaria de editar?\n");
+            printf("Qual informacao gostaria de editar?\n");
             printf("1 - Codigo: %s\n", (*node)->produto->codigo);
             printf("2 - Nome: %s\n", (*node)->produto->nome);
             printf("3 - Preco: %.2lf\n", (*node)->produto->preco);
@@ -136,7 +146,7 @@ void editarProduto(NodeProduto** lista){
         int control, quantidade;
         switch (opcao)
         {
-            case 1:printf("Digite o novo código: ");
+            case 1:printf("Digite o novo codigo: ");
                 do{
                     temp = lerString();
                     if(buscarProduto(lista,temp)!=NULL){
@@ -188,6 +198,11 @@ void editarProduto(NodeProduto** lista){
 }
 
 void removerProduto(NodeProduto** lista){
+    if(lista == NULL || (*lista)==NULL){
+        printf("Nenhum produto cadastrado.\n");
+        continuar();
+        return;
+    }
     printf("Insira o codigo do produto: ");
     char* codigo = lerString();
     NodeProduto** node = (buscarProduto(lista, codigo));

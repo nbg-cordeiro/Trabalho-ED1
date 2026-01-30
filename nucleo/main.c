@@ -126,6 +126,7 @@ void encerrar(NodeProduto** produtos, node_Cliente** clientes){
     char* resposta = lerString();
     if(!compararString(resposta, "sair")){
         free(resposta);
+        limpaConsole();
         printf("Saida cancelada!\n");
         continuar();
         return;
