@@ -6,6 +6,7 @@ typedef struct Produto{
     char* codigo;
     char* nome;
     double preco;
+    int quantidade;
 }Produto;
 
 typedef struct node_Produto{
@@ -17,9 +18,11 @@ typedef struct node_Produto{
 
 Produto* criarProduto();
 void imprimirProduto(Produto*);
-void editarProduto(Produto*);
-void removerProduto(Node*, Produto*);
-void listarProdutos(Node*);
-void freeProduto(Produto**);
+void editarProduto(NodeProduto**);
+void removerProduto(NodeProduto*, Produto*);
+void listarProdutos(NodeProduto*);
+NodeProduto** buscarProduto(NodeProduto**, char*);
+void freeProdutos(NodeProduto**);
+void adicionarProduto(NodeProduto**);
 
 #endif
