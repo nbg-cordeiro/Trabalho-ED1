@@ -3,7 +3,6 @@
 
 #include "auxiliares.h"
 #include "produtos.h"
-#include <string.h>
 
 typedef struct Cliente{
     char* cpf;
@@ -21,6 +20,7 @@ typedef struct node_Cliente{
 
 void editarCliente(node_Cliente *head);
 node_Cliente* buscarCPF(char*, node_Cliente*);
+void buscarCliente(node_Cliente **);
 void removerCliente(node_Cliente**);
 void imprimirClientes(node_Cliente **);
 void criarCliente(node_Cliente *);
