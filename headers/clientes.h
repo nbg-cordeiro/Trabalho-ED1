@@ -20,7 +20,7 @@ typedef struct node_Cliente{
 }node_Cliente;
 
 void editarCliente(Cliente**);
-node_Cliente* buscarCPF(char*, node_Cliente**);
+node_Cliente* buscarCPF(char*, node_Cliente*);
 void removerCliente(node_Cliente**);
 void imprimirClientes(node_Cliente **);
 void criarCliente(node_Cliente *);

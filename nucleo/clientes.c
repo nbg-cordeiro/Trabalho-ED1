@@ -172,14 +172,22 @@ void editarCliente(Cliente** cliente){
 
 // ===== BUSCAR CLIENTE ===== //
 
-node_Cliente* buscarCPF(char* cpf, node_Cliente **head){
+node_Cliente* buscarCPF(char* cpf, node_Cliente *head){
+    if (cpf == NULL){
+        perror("Entrada de dados invalidos em buscarCPF().");
+        return NULL;
+    }
     node_Cliente *atual;
-    atual = (*head);
+    atual = head;
 
     while (atual != NULL ){
-        if (strcmp(atual->data->cpf,cpf)){ //mudar pro strcmp do joao do bem :3
+        if (atual->data != NULL){
+            if (compararString(atual->data->cpf,cpf) == 1){
             return atual;
         }
+
+        }
+        
         atual = atual->proximo;
     }
 
@@ -243,28 +251,40 @@ void removerCliente(node_Cliente** head){
     }
 
     printf("\nRemover Cliente:\n");
-    printf("Não utilize nenhuma acentuação ('/', '-', '.') ou espaçamento.");
+    printf("Nao utilize nenhuma acentuacao ('/', '-', '.') ou espacamento.");
     printf("- Digite o CPF do cliente: ");
+
     char * temp = NULL;
+    
     temp = lerString();
+    if (temp == NULL){
+        perror("Erro ao alocar memoria em removerCliente():lerString().");
+        return;
+    }
 
-    node_Cliente * lixo = NULL;
-    lixo = buscarCPF(temp, head);
+    node_Cliente * delete = NULL;
 
-    if ((*head) == lixo){
-        (*head = lixo->proximo);
+    
+    delete = buscarCPF(temp, (*head));
+    if (delete == NULL){
+        perror("Erro ao alocar memoria em removerCliente():buscarCPF()");
+        return;
+    }
+
+    if ((*head) == delete){
+        (*head = delete->proximo);
     } else{
         node_Cliente *anterior;
         anterior = (*head);
-        while (anterior != NULL && anterior->proximo != lixo){
+        while (anterior != NULL && anterior->proximo != delete){
             anterior = anterior->proximo;
         }
         if (anterior != NULL){
-        anterior->proximo = lixo->proximo;
+        anterior->proximo = delete->proximo;
         }
     }
     
-    freeCliente(&lixo->data);
-    free(lixo);
+    freeCliente(&(delete->data));
+    free(delete);
     free(temp);
 }
