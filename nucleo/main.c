@@ -70,7 +70,7 @@ void menuClientes(node_Cliente** head){
     {
     case 1: criarCliente((*head)); break;
     case 2: imprimirClientes(head); break;
-    case 3:break;
+    case 3: buscarCliente(head); break;
     case 4: editarCliente((*head)); break;
     case 5: removerCliente(head);break;
     default:

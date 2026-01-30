@@ -1,16 +1,12 @@
 #include "clientes.h"
 
-/* checklist
+/* to-do
 
-cadastrar cliente:          ok
-listar todos os clientes:   ok
-buscar cliente pelo cpf:    ok
-editar dados de um cliente: pecisa testar
-remover cliente:            ok
+fazer uma verificação de dados tanto pro criarCliente() como pro editarCliente()
+mudar cpf, telefone e nascimento pra int
 
 */
 
-// ===== NODES CLIENTE ===== //
 
 void InserirNode(node_Cliente *head, Cliente * dado){
     node_Cliente *novo = malloc(sizeof(node_Cliente));
@@ -24,8 +20,6 @@ void InserirNode(node_Cliente *head, Cliente * dado){
     novo->proximo = head->proximo;
     head->proximo = novo;
 }
-
-// ===== CRIAR CLIENTE ===== //
 
 void imprimeCliente(Cliente * cliente){
     printf("%s\n", cliente->nome);
@@ -84,8 +78,6 @@ void criarCliente(node_Cliente *head){
 
     InserirNode(head,novoCliente);
 }
-
-// ===== EDITAR CLIENTE ===== //
 
 void editarCliente(node_Cliente *head){
 
@@ -172,8 +164,6 @@ void editarCliente(node_Cliente *head){
     
 }
 
-// ===== BUSCAR CLIENTE ===== //
-
 node_Cliente* buscarCPF(char* cpf, node_Cliente *head){
     if (cpf == NULL){
         perror("Entrada de dados invalidos em buscarCPF().");
@@ -196,7 +186,29 @@ node_Cliente* buscarCPF(char* cpf, node_Cliente *head){
     return NULL;
 }
 
-// ===== REMOVER CLIENTE ===== //
+
+void buscarCliente(node_Cliente **head){
+    printf("\nBuscar Cliente:\n");
+    printf("Nao utilize nenhuma acentuacao ('/', '-', '.') ou espacamento.\n");
+    printf("- Digite o CPF do cliente: ");
+
+    char * temp = NULL;
+    temp = lerString();
+    if (temp == NULL){
+        return;
+    }
+    node_Cliente *cliente = buscarCPF(temp, (*head));
+    if (cliente == NULL){
+        printf("Cliente não foi encontrad.");
+        return;
+    }
+
+    printf("\n====== BUSCAR CLIENTE ======\n");
+    imprimeCliente(cliente->data);
+    free(temp);
+
+    return;
+}
 
 void freeCliente(Cliente** cliente){
     free((*cliente)->nome);
@@ -216,7 +228,7 @@ void removerCliente(node_Cliente** head){
     }
 
     printf("\nRemover Cliente:\n");
-    printf("Nao utilize nenhuma acentuacao ('/', '-', '.') ou espacamento.");
+    printf("Nao utilize nenhuma acentuacao ('/', '-', '.') ou espacamento.\n");
     printf("- Digite o CPF do cliente: ");
 
     char * temp = NULL;
