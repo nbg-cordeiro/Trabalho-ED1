@@ -1,15 +1,5 @@
 #include "auxiliares.h"
 
-void freeLista(Node** lista){
-    while((*lista) != NULL){
-        Node* aux = (*lista)->proximo;
-        free((*lista)->conteudo);
-        (*lista)->conteudo=NULL;
-        free((*lista));
-        (*lista)=aux;
-    }
-}
-
 void limpaBuffer(void){
     int c=0;
     while(c!='\n' && c!=EOF)
@@ -48,4 +38,18 @@ char* lerString(){
     }
     str=temp;
     return str;
+}
+
+int compararString(char* string1, char* string2){
+    int igual = 1, i = 0;
+    while(1){
+        if(string1[i]!=string2[i]){
+            igual=0;
+            break;
+        }
+        if(string1[i]=='\0')
+            break;
+        i++;
+    }
+    return igual;
 }
