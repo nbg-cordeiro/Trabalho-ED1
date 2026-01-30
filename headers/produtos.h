@@ -24,5 +24,6 @@ NodeProduto** buscarProduto(NodeProduto**, char*);
 void freeProdutos(NodeProduto**);
 void adicionarProduto(NodeProduto**);
 void imprimePorCodigo(NodeProduto**);
+double somaProdutos(NodeProduto**);
 
 #endif

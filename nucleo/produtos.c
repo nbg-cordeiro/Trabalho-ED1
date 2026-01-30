@@ -146,7 +146,8 @@ void editarProduto(NodeProduto** lista){
         int control, quantidade;
         switch (opcao)
         {
-            case 1:printf("Digite o novo codigo: ");
+            case 1:
+                printf("Digite o novo codigo: ");
                 do{
                     temp = lerString();
                     if(buscarProduto(lista,temp)!=NULL){
@@ -251,4 +252,13 @@ void freeProdutos(NodeProduto** produtos){
 
         (*produtos)=aux;
     }
+}
+
+double somaProdutos(NodeProduto** lista){
+    double soma = 0;
+    while((*lista)!=NULL){
+        soma += (*lista)->produto->preco * (*lista)->produto->quantidade;
+        lista = &((*lista)->proximo);
+    }
+    return soma;
 }

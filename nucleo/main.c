@@ -4,8 +4,7 @@
 
 int menuPrincipal(NodeProduto**, node_Cliente**);
 void menuProdutos(NodeProduto**);
-void menuClientes(void);
-void menu_editaClientes();
+void menuClientes(node_Cliente**);
 void encerrar(NodeProduto**, node_Cliente**);
 
 int main ()
@@ -39,17 +38,17 @@ int menuPrincipal(NodeProduto** produtos, node_Cliente** clientes){
         }while(opcao<1 || opcao>4);
 
         switch(opcao){
-            case 1: menuClientes(); break;
+            case 1: menuClientes(clientes); break;
             case 2: menuProdutos(produtos); break;
             case 4: encerrar(produtos, clientes);break;
         }
     }
 }
 
-void menuClientes(){
+void menuClientes(node_Cliente** head){
     int opcao = -1;
     do{
-        printf("\n====== MENU Clientes ======\n");
+        printf("\n====== MENU CLIENTES ======\n");
         printf("1 - Cadastrar cliente\n");
         printf("2 - Listar clientes\n");
         printf("3 - Buscar cliente pelo CPF\n");
@@ -60,30 +59,23 @@ void menuClientes(){
         int controle = scanf("%d", &opcao);
         limpaBuffer();
 
-        if(controle!=1 || opcao<1 || opcao>4){
+        if(controle!=1 || opcao<1 || opcao>6){
             limpaConsole();
             printf("\nInput Invalido! Tente novamente.\n");
             opcao = -1;
         }
-    }while(opcao<1 || opcao>4);
+    }while(opcao<1 || opcao>6);
 
     switch (opcao)
     {
-    case 1:
-        // criarCliente();     // tem que lembrar que precisa jogar eles pra um node
-        break;
-    case 2:break;
-    case 3:break;
-    case 4: menu_editaClientes(); break;
-    case 5:break;
+    case 1: criarCliente((*head)); break;
+    case 2: imprimirClientes(head); break;
+    case 3: buscarCliente(head); break;
+    case 4: editarCliente((*head)); break;
+    case 5: removerCliente(head);break;
     default:
         return;
-        break;
     }
-}
-
-void menu_editaClientes(){
-    return;
 }
 
 void menuProdutos(NodeProduto** lista){
