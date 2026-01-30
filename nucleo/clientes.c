@@ -6,7 +6,7 @@ cadastrar cliente:          ok
 listar todos os clientes:   ok
 buscar cliente pelo cpf:    precisa testar
 editar dados de um cliente: pecisa testar
-remover cliente:            pendente
+remover cliente:            precisa testar
 
 */
 
@@ -250,17 +250,21 @@ void removerCliente(node_Cliente** head){
 
     node_Cliente * lixo = NULL;
     lixo = buscarCPF(temp, head);
-    node_Cliente *anterior;
 
-    anterior = (*head);
-    
-    while (anterior != NULL && anterior->proximo != lixo){
-        anterior = anterior->proximo;
-    }
-
-    if (anterior != NULL){
+    if ((*head) == lixo){
+        (*head = lixo->proximo);
+    } else{
+        node_Cliente *anterior;
+        anterior = (*head);
+        while (anterior != NULL && anterior->proximo != lixo){
+            anterior = anterior->proximo;
+        }
+        if (anterior != NULL){
         anterior->proximo = lixo->proximo;
-        freeCliente(&lixo->data);
-        free(lixo);
+        }
     }
+    
+    freeCliente(&lixo->data);
+    free(lixo);
+    free(temp);
 }
