@@ -22,14 +22,12 @@ void imprimePorCodigo(NodeProduto** lista){
     free(codigo1);
     if(produto1==NULL || (*produto1)==NULL){
         printf("Produto nao encontrado!\n");
-        printf("Pressione qualquer tecla para continuar.\n");
-        getchar();
+        continuar();
         return;
     }
     printf("Produto:\n");
     imprimirProduto((*produto1)->produto);
-    printf("\nPressione qualquer tecla para continuar.\n");
-    getchar();
+    continuar();
 }
 
 void listarProdutos(NodeProduto* lista){
@@ -46,8 +44,7 @@ void listarProdutos(NodeProduto* lista){
         i++;
         lista=lista->proximo;
     }
-    printf("Pressione qualquer tecla para continuar.\n");
-    getchar();
+    continuar();
 }
 
 void adicionarProduto(NodeProduto** lista){
@@ -59,6 +56,8 @@ void adicionarProduto(NodeProduto** lista){
     novoNode->produto=criarProduto(lista);
     novoNode->proximo=(*lista);
     (*lista)=novoNode;
+    printf("Produto adicionado com sucesso!\n");
+    continuar();
 }
 
 Produto* criarProduto(NodeProduto** lista){
@@ -112,8 +111,7 @@ void editarProduto(NodeProduto** lista){
     free(codigo);
     if(node==NULL || (*node)==NULL){
         printf("Produto nao encontrado!\n");
-        printf("Pressione qualquer tecla para continuar.\n");
-        getchar();
+        continuar();
         return;
     }
     while(1){
@@ -185,8 +183,7 @@ void editarProduto(NodeProduto** lista){
         }
         printf("Produto editado com sucesso!\n");
         imprimirProduto((*node)->produto);
-        printf("\nPrecione qualquer tecla para continuar!\n");
-        getchar();
+        continuar();
     }
 }
 
@@ -197,12 +194,9 @@ void removerProduto(NodeProduto** lista){
     free(codigo);
     if(node==NULL || (*node)==NULL){
     printf("Produto nao encontrado!\n");
-        printf("Pressione qualquer tecla para continuar.\n");
-        getchar();
+        continuar();
         return;
     }
-    if(node==NULL || (*node)==NULL)
-        return;
     NodeProduto* aux = (*node)->proximo;
 
     free((*node)->produto->codigo);
@@ -218,8 +212,7 @@ void removerProduto(NodeProduto** lista){
     (*node)=aux;
 
     printf("Produto removido com sucesso!\n");
-    printf("Pressione qualquer tecla para continuar.\n");
-    getchar();
+    continuar();
 }
 
 void freeProdutos(NodeProduto** produtos){

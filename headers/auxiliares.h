@@ -8,5 +8,6 @@ void limpaBuffer(void);
 void limpaConsole(void);
 char* lerString(void);
 int compararString(char*, char*);
+void continuar();
 
 #endif
