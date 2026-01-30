@@ -28,11 +28,18 @@ void freeProdutos(NodeProduto** produtos){
     }
 }
 
-Produto* criarProduto(){
+Produto* criarProduto(NodeProduto** lista){
     Produto* novoProduto = malloc(sizeof(Produto));
-
-    printf("Novo produto:\nCodigo: ");
-    char* codigo = lerString();
+    char* codigo=NULL;
+    do{
+        printf("Novo produto:\nCodigo: ");
+        codigo = lerString();
+        if(buscarProduto(lista,codigo)!=NULL){
+            printf("Este codigo ja existe!\n");
+            free(codigo);
+            codigo=NULL;
+        }
+    }while(codigo==NULL);
     novoProduto->codigo=codigo;
 
     printf("Nome: ");
@@ -149,7 +156,7 @@ void adicionarProduto(NodeProduto** lista){
         perror("Erro ao alocar memoria em adicionarProduto()");
         exit(EXIT_FAILURE);
     }
-    novoNode->produto=criarProduto();
+    novoNode->produto=criarProduto(lista);
     novoNode->proximo=(*lista);
     (*lista)=novoNode;
 }
@@ -170,4 +177,22 @@ void listarProdutos(NodeProduto* lista){
     }
     printf("Pressione qualquer tecla para continuar.\n");
     getchar();
+}
+
+void removerProduto(NodeProduto** node){
+    if(node==NULL || (*node)==NULL)
+        return;
+    NodeProduto* aux = (*node)->proximo;
+
+    free((*node)->produto->codigo);
+    (*node)->produto->codigo=NULL;
+
+    free((*node)->produto->nome);
+    (*node)->produto->nome=NULL;
+
+    free((*node)->produto);
+    (*node)->produto=NULL;
+
+    free(*node);
+    (*node)=aux;
 }

@@ -134,6 +134,8 @@ void menuProdutos(NodeProduto** lista){
                 printf("Produto:\n");
                 imprimirProduto((*produto1)->produto);
                 printf("\n");
+                getchar();
+                printf("Pressione qualquer tecla para continuar.\n");
                 break;
             case 4:
                 printf("Insira o codigo do produto: ");
@@ -147,6 +149,22 @@ void menuProdutos(NodeProduto** lista){
                     break;
                 }
                 editarProduto(produto2);
+                break;
+            case 5:
+                printf("Insira o codigo do produto: ");
+                char* codigo3 = lerString();
+                NodeProduto** produto3 = (buscarProduto(lista, codigo3));
+                free(codigo3);
+                if(produto3==NULL || (*produto3)==NULL){
+                    printf("Produto nao encontrado!\n");
+                    printf("Pressione qualquer tecla para continuar.\n");
+                    getchar();
+                    break;
+                }
+                removerProduto(produto3);
+                printf("Produto removido com sucesso!\n");
+                printf("Pressione qualquer tecla para continuar.\n");
+                getchar();
                 break;
             default:
                 return;
