@@ -40,12 +40,38 @@ void InserirNode(node_Cliente **head, Cliente * dado){
 // ===== REMOVER CLIENTE ===== //
 
 void freeCliente(Cliente** cliente){
-    free((*cliente)->cpf);
     free((*cliente)->nome);
-    free((*cliente)->telefone);
+    free((*cliente)->cpf);
     free((*cliente)->dataNascimento);
+    free((*cliente)->telefone);
+    free(*cliente);
     (*cliente) = NULL;
+
+    //free(carrinho);
+
 }
+
+void free_ListaClientes(node_Cliente** lista){
+    if (lista == NULL){
+        return;
+    }
+
+    node_Cliente* atual = *lista;
+
+    while (atual->data != NULL){
+        node_Cliente* prox = atual->proximo;
+
+        if (atual->data != NULL){
+            freeCliente(&(atual->data));
+        }
+        free(atual);
+
+        atual = prox;
+    }
+
+    *lista = NULL;
+}
+
 
 // ===== EDITAR CLIENTE ===== //
 
@@ -149,16 +175,23 @@ void editarCliente(Cliente** cliente){
 
 // ===== CRIAR CLIENTE ===== //
 
-Cliente* criarCliente(){
+void imprimeCliente(Cliente * cliente){
+    printf("%s | %s | %s | %s\n", cliente->nome, cliente->cpf, cliente->telefone, cliente->dataNascimento);
+    printf("--------------------");
+}
+
+void criarCliente(node_Cliente **head){
     Cliente* novoCliente = malloc(sizeof(Cliente));
+    if (novoCliente == NULL){
+        perror("Erro ao alocar memória em criarCliente().");
+        exit(EXIT_FAILURE);
+    }
 
     printf("Novo cliente:\nNome:");
     char* nome = lerString();
     novoCliente->nome = nome;
 
     printf("Insira os dados a seguir sem pontuacao ('/', '-' e/ou '.') e sem espacamento.\n");
-
-    //fazer uma verificacao de tamanho de string nesses rapazes
 
     printf("CPF: ");
     char* cpf = lerString();
@@ -175,7 +208,8 @@ Cliente* criarCliente(){
 
     printf("\nCliente cadastrado com exito.\n");
 
-    // imprimeCliente()?
-    return novoCliente;
+    imprimeCliente(novoCliente);
+
+    InserirNode(head,novoCliente);
 }
 

@@ -5,11 +5,12 @@
 int menuPrincipal(void);
 void menuProdutos(void);
 void menuClientes(void);
+void menu_editaClientes();
 
 int main ()
 {
     node_Cliente* listaClientes = NULL; // lerClientes(); tem que criar esse carinha
-    node_Produto* listaProdutos = NULL; // lerProdutos(); e esse aqui também
+    Node* listaProdutos = NULL; // lerProdutos(); e esse aqui também
     
     criarProduto(); // isso é só pra testar o menu
     while(1){
@@ -17,11 +18,12 @@ int main ()
         limpaConsole();
         switch(opcao)
         {
+            case 1: menuClientes(); break;
             case 2: menuProdutos(); break;
             case 4:
                 // salvarClientes(listaClientes); tem que colocar esse menininho
                 // salvarLista(listaProdutos); esse menininho também
-                freeLista(&listaClientes);
+                free_ListaCliente(&listaClientes);
                 freeLista(&listaProdutos);
                 printf("Saindo...");
                 exit(EXIT_SUCCESS);
@@ -86,21 +88,18 @@ void menuClientes(){
     case 1:
         // criarCliente();     // tem que lembrar que precisa jogar eles pra um node
         break;
-    case 2:
-        break;
-    case 3:
-        break;
-    case 4:
-        // Opção de buscar por nome ou por cpf (quem errar os dois na hora de cadastrar é bobão)
-        break;
-    case 5:
-        break;
-    case 6:
-    
+    case 2:break;
+    case 3:break;
+    case 4: menu_editaClientes(); break;
+    case 5:break;
     default:
         return;
         break;
     }
+}
+
+void menu_editaClientes(){
+    return;
 }
 
 int menuPrincipal(void){
