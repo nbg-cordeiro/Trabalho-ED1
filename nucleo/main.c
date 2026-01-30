@@ -2,56 +2,47 @@
 #include "produtos.h"
 #include "clientes.h"
 
-int menuPrincipal(void);
+int menuPrincipal(NodeProduto**, node_Cliente**);
 void menuProdutos(NodeProduto**);
 void menuClientes(void);
 void menu_editaClientes();
+void encerrar(NodeProduto**, node_Cliente**);
 
 int main ()
 {
-    node_Cliente* listaClientes = malloc(sizeof(node_Cliente)); // lerClientes(); tem que criar esse carinha
+    NodeProduto* listaProdutos = NULL;
+    node_Cliente* listaClientes = malloc(sizeof(node_Cliente));
     listaClientes->data = NULL;
     listaClientes->proximo = NULL;
-    NodeProduto* listaProdutos = NULL;
-    
-    //criarCliente(listaClientes); // isso é só pra testar o menu
-    while(1){
-        limpaConsole();
-        int opcao = menuPrincipal();
-        switch(opcao)
-        {
-            case 1: menuClientes(); break;
-            case 2: menuProdutos(&listaProdutos); break;
-            case 4: 
-                free_ListaClientes(&listaClientes);
-                freeProdutos(&listaProdutos);
-                printf("Saindo...");
-                exit(EXIT_SUCCESS);
-            break;
-        }
-    }
+    menuPrincipal(&listaProdutos, &listaClientes);
 }
 
-int menuPrincipal(void){
-    int opcao=-1;
-    do{
-        printf("\n====== MENU PRINCIPAL ======\n");
-        printf("1 - Gerenciamento de clientes\n");
-        printf("2 - Gerenciamento de produtos\n");
-        printf("3 - Modo de compra\n");
-        printf("4 - Sair\n");
-        printf("Escolha uma opcao:\n");
-        int controle = scanf("%d", &opcao);
-        limpaBuffer();
+int menuPrincipal(NodeProduto** produtos, node_Cliente** clientes){
+    while(1){
+        int opcao=-1;
+        do{
+            printf("\n====== MENU PRINCIPAL ======\n");
+            printf("1 - Gerenciamento de clientes\n");
+            printf("2 - Gerenciamento de produtos\n");
+            printf("3 - Modo de compra\n");
+            printf("4 - Sair\n");
+            printf("Escolha uma opcao:\n");
+            int controle = scanf("%d", &opcao);
+            limpaBuffer();
 
-        if(controle!=1 || opcao<1 || opcao>4){
-            limpaConsole();
-            printf("\nInput Invalido! Tente novamente.\n");
-            opcao = -1;
+            if(controle!=1 || opcao<1 || opcao>4){
+                limpaConsole();
+                printf("\nInput Invalido! Tente novamente.\n");
+                opcao = -1;
+            }
+        }while(opcao<1 || opcao>4);
+
+        switch(opcao){
+            case 1: menuClientes(); break;
+            case 2: menuProdutos(produtos); break;
+            case 4: encerrar(produtos, clientes);break;
         }
-    }while(opcao<1 || opcao>4);
-    
-    return opcao;
+    }
 }
 
 void menuClientes(){
@@ -126,4 +117,11 @@ void menuProdutos(NodeProduto** lista){
             case 6:return;
         }
     }
+}
+
+void encerrar(NodeProduto** produtos, node_Cliente** clientes){
+    free_ListaClientes(clientes);
+    freeProdutos(produtos);
+    printf("Saindo...");
+    exit(EXIT_SUCCESS);
 }
