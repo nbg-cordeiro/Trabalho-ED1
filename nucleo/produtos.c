@@ -34,7 +34,7 @@ Produto* criarProduto(){
 
     novoProduto->preco = preco;
     printf("Produto (");
-    imprimirProduto(&novoProduto);
+    imprimirProduto(novoProduto);
     printf(") cadastrado com sucesso!\n");
     return novoProduto;
 }

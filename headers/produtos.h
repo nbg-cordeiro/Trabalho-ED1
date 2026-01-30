@@ -8,6 +8,13 @@ typedef struct Produto{
     double preco;
 }Produto;
 
+typedef struct node_Produto{
+    Produto* data;
+    struct node_Produto* proximo;
+    
+}node_Produto;
+
+
 Produto* criarProduto();
 void imprimirProduto(Produto*);
 void editarProduto(Produto*);
