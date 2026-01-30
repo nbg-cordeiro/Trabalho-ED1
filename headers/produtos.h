@@ -9,10 +9,12 @@ typedef struct Produto{
     int quantidade;
 }Produto;
 
-typedef struct NodeProduto{
-    Produto* produto;
-    struct NodeProduto* proximo;
-}NodeProduto;
+typedef struct node_Produto{
+    Produto* data;
+    struct node_Produto* proximo;
+    
+}node_Produto;
+
 
 Produto* criarProduto();
 void imprimirProduto(Produto*);
