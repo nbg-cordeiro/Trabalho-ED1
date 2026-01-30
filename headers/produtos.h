@@ -15,13 +15,14 @@ typedef struct NodeProduto{
 }NodeProduto;
 
 
-Produto* criarProduto();
+Produto* criarProduto(NodeProduto**);
 void imprimirProduto(Produto*);
 void editarProduto(NodeProduto**);
-void removerProduto(NodeProduto*, Produto*);
+void removerProduto(NodeProduto**);
 void listarProdutos(NodeProduto*);
 NodeProduto** buscarProduto(NodeProduto**, char*);
 void freeProdutos(NodeProduto**);
 void adicionarProduto(NodeProduto**);
+void imprimePorCodigo(NodeProduto**);
 
 #endif

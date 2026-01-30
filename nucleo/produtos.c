@@ -1,38 +1,78 @@
 #include "produtos.h"
 
+NodeProduto** buscarProduto(NodeProduto** lista, char* codigo){
+    while((*lista)!=NULL){
+        if((compararString((*lista)->produto->codigo, codigo))){
+            return lista;
+        }
+        lista = &((*lista)->proximo);
+    }
+    return NULL;
+}
+
 void imprimirProduto(Produto* produto){
     if(produto!=NULL)
         printf("Cod: %s - Nome: %s - R$ %.2lf - Qtd: %d", produto->codigo, produto->nome, produto->preco, produto->quantidade);
 }
 
-void freeProdutos(NodeProduto** produtos){
-    if(produtos==NULL)
+void imprimePorCodigo(NodeProduto** lista){
+    printf("Insira o codigo do produto: ");
+    char* codigo1 = lerString();
+    NodeProduto** produto1 = (buscarProduto(lista, codigo1));
+    free(codigo1);
+    if(produto1==NULL || (*produto1)==NULL){
+        printf("Produto nao encontrado!\n");
+        printf("Pressione qualquer tecla para continuar.\n");
+        getchar();
         return;
-    while((*produtos)!=NULL){
-        NodeProduto* aux = (*produtos)->proximo;
-
-        if ((*produtos)->produto != NULL) {
-            free((*produtos)->produto->codigo);
-            (*produtos)->produto->codigo=NULL;
-
-            free((*produtos)->produto->nome);
-            (*produtos)->produto->nome=NULL;
-            
-            free((*produtos)->produto);
-            (*produtos)->produto=NULL;
-        }
-        free(*produtos);
-        (*produtos)=NULL;
-
-        (*produtos)=aux;
     }
+    printf("Produto:\n");
+    imprimirProduto((*produto1)->produto);
+    printf("\nPressione qualquer tecla para continuar.\n");
+    getchar();
 }
 
-Produto* criarProduto(){
-    Produto* novoProduto = malloc(sizeof(Produto));
+void listarProdutos(NodeProduto* lista){
+    if(lista == NULL){
+        printf("Nenhum produto cadastrado.\nPressione qualquer tecla para continuar.\n");
+        getchar();
+        return;
+    }
+    int i = 1;
+    while(lista!=NULL){
+        printf("%d- ",i);
+        imprimirProduto(lista->produto);
+        printf("\n");
+        i++;
+        lista=lista->proximo;
+    }
+    printf("Pressione qualquer tecla para continuar.\n");
+    getchar();
+}
 
-    printf("Novo produto:\nCodigo: ");
-    char* codigo = lerString();
+void adicionarProduto(NodeProduto** lista){
+    NodeProduto* novoNode = malloc(sizeof(NodeProduto));
+    if(novoNode==NULL){
+        perror("Erro ao alocar memoria em adicionarProduto()");
+        exit(EXIT_FAILURE);
+    }
+    novoNode->produto=criarProduto(lista);
+    novoNode->proximo=(*lista);
+    (*lista)=novoNode;
+}
+
+Produto* criarProduto(NodeProduto** lista){
+    Produto* novoProduto = malloc(sizeof(Produto));
+    char* codigo=NULL;
+    do{
+        printf("Novo produto:\nCodigo: ");
+        codigo = lerString();
+        if(buscarProduto(lista,codigo)!=NULL){
+            printf("Este codigo ja existe!\n");
+            free(codigo);
+            codigo=NULL;
+        }
+    }while(codigo==NULL);
     novoProduto->codigo=codigo;
 
     printf("Nome: ");
@@ -65,9 +105,15 @@ Produto* criarProduto(){
     return novoProduto;
 }
 
-void editarProduto(NodeProduto** node){
+void editarProduto(NodeProduto** lista){
+    printf("Insira o codigo do produto: ");
+    char* codigo = lerString();
+    NodeProduto** node = (buscarProduto(lista, codigo));
+    free(codigo);
     if(node==NULL || (*node)==NULL){
-        printf("Produto não existe!\n");
+        printf("Produto nao encontrado!\n");
+        printf("Pressione qualquer tecla para continuar.\n");
+        getchar();
         return;
     }
     while(1){
@@ -93,7 +139,14 @@ void editarProduto(NodeProduto** node){
         switch (opcao)
         {
             case 1:printf("Digite o novo código: ");
-                temp = lerString();
+                do{
+                    temp = lerString();
+                    if(buscarProduto(lista,temp)!=NULL){
+                        printf("Esse codigo ja existe!\n");
+                        free(temp);
+                        temp=NULL;
+                    }
+                }while(temp==NULL);
                 free((*node)->produto->codigo);
                 (*node)->produto->codigo = temp;
                 break;
@@ -130,44 +183,64 @@ void editarProduto(NodeProduto** node){
             default:
                 return;
         }
+        printf("Produto editado com sucesso!\n");
+        imprimirProduto((*node)->produto);
+        printf("\nPrecione qualquer tecla para continuar!\n");
+        getchar();
     }
 }
 
-NodeProduto** buscarProduto(NodeProduto** lista, char* codigo){
-    while((*lista)!=NULL){
-        if((compararString((*lista)->produto->codigo, codigo))){
-            return lista;
-        }
-        lista = &((*lista)->proximo);
-    }
-    return NULL;
-}
-
-void adicionarProduto(NodeProduto** lista){
-    NodeProduto* novoNode = malloc(sizeof(NodeProduto));
-    if(novoNode==NULL){
-        perror("Erro ao alocar memoria em adicionarProduto()");
-        exit(EXIT_FAILURE);
-    }
-    novoNode->produto=criarProduto();
-    novoNode->proximo=(*lista);
-    (*lista)=novoNode;
-}
-
-void listarProdutos(NodeProduto* lista){
-    if(lista == NULL){
-        printf("Nenhum produto cadastrado.\nPressione qualquer tecla para continuar.\n");
+void removerProduto(NodeProduto** lista){
+    printf("Insira o codigo do produto: ");
+    char* codigo = lerString();
+    NodeProduto** node = (buscarProduto(lista, codigo));
+    free(codigo);
+    if(node==NULL || (*node)==NULL){
+    printf("Produto nao encontrado!\n");
+        printf("Pressione qualquer tecla para continuar.\n");
         getchar();
         return;
     }
-    int i = 1;
-    while(lista!=NULL){
-        printf("%d- ",i);
-        imprimirProduto(lista->produto);
-        printf("\n");
-        i++;
-        lista=lista->proximo;
-    }
+    if(node==NULL || (*node)==NULL)
+        return;
+    NodeProduto* aux = (*node)->proximo;
+
+    free((*node)->produto->codigo);
+    (*node)->produto->codigo=NULL;
+
+    free((*node)->produto->nome);
+    (*node)->produto->nome=NULL;
+
+    free((*node)->produto);
+    (*node)->produto=NULL;
+
+    free(*node);
+    (*node)=aux;
+
+    printf("Produto removido com sucesso!\n");
     printf("Pressione qualquer tecla para continuar.\n");
     getchar();
+}
+
+void freeProdutos(NodeProduto** produtos){
+    if(produtos==NULL)
+        return;
+    while((*produtos)!=NULL){
+        NodeProduto* aux = (*produtos)->proximo;
+
+        if ((*produtos)->produto != NULL) {
+            free((*produtos)->produto->codigo);
+            (*produtos)->produto->codigo=NULL;
+
+            free((*produtos)->produto->nome);
+            (*produtos)->produto->nome=NULL;
+            
+            free((*produtos)->produto);
+            (*produtos)->produto=NULL;
+        }
+        free(*produtos);
+        (*produtos)=NULL;
+
+        (*produtos)=aux;
+    }
 }
