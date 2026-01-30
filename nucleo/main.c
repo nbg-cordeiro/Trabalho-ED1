@@ -14,7 +14,6 @@ int main ()
     listaClientes->proximo = NULL;
     NodeProduto* listaProdutos = NULL;
     
-    //criarCliente(listaClientes); // isso é só pra testar o menu
     while(1){
         limpaConsole();
         int opcao = menuPrincipal();
