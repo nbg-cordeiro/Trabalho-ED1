@@ -19,6 +19,7 @@ int main ()
 
 int menuPrincipal(NodeProduto** produtos, node_Cliente** clientes){
     while(1){
+        limpaConsole();
         int opcao=-1;
         do{
             printf("\n====== MENU PRINCIPAL ======\n");
@@ -120,6 +121,16 @@ void menuProdutos(NodeProduto** lista){
 }
 
 void encerrar(NodeProduto** produtos, node_Cliente** clientes){
+    limpaConsole();
+    printf("Caso deseje sair, digite \"sair\"\n");
+    char* resposta = lerString();
+    if(!compararString(resposta, "sair")){
+        free(resposta);
+        printf("Saida cancelada!\n");
+        continuar();
+        return;
+    }
+    free(resposta);
     free_ListaClientes(clientes);
     freeProdutos(produtos);
     printf("Saindo...");

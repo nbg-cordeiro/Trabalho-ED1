@@ -53,3 +53,8 @@ int compararString(char* string1, char* string2){
     }
     return igual;
 }
+
+void continuar(){
+    printf("\nPressione qualquer tecla para continuar.\n");
+    getchar();
+}
