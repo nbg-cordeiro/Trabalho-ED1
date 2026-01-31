@@ -253,17 +253,17 @@ void buscarCliente(node_Cliente **head){
     continuar();
 }
 
-void freeCliente(Cliente** cliente){
+void freeCliente(Cliente** cliente, NodeProduto** estoque){
     free((*cliente)->nome);
     free((*cliente)->cpf);
     free((*cliente)->dataNascimento);
     free((*cliente)->telefone);
-    freeProdutos(&((*cliente)->carrinho));
+    freeCarrinho(&((*cliente)->carrinho), estoque);
     free(*cliente);
     (*cliente) = NULL;
 }
 
-void removerCliente(node_Cliente** head){
+void removerCliente(node_Cliente** head, NodeProduto** estoque){
     if (head == NULL || (*head) == NULL){
         return;
     }
@@ -302,14 +302,14 @@ void removerCliente(node_Cliente** head){
         }
     }
     
-    freeCliente(&(delete->data));
+    freeCliente(&(delete->data), estoque);
     free(delete);
     free(temp);
 
     continuar();
 }
 
-void free_ListaClientes(node_Cliente** lista){
+void free_ListaClientes(node_Cliente** lista, NodeProduto** estoque){
     if (lista == NULL || (*lista) == NULL){
         return;
     }
@@ -320,10 +320,15 @@ void free_ListaClientes(node_Cliente** lista){
         node_Cliente* prox = atual->proximo;
 
         if (atual->data != NULL){
-            freeCliente(&(atual->data));
+            freeCliente(&(atual->data), estoque);
         }
         free(atual);
 
         atual = prox;
     }
+}
+
+void freeCarrinho (NodeProduto** carrinho, NodeProduto** estoque){
+
+    #warning faz isso aqui!
 }

@@ -282,11 +282,11 @@ void adicionarCarrinho(NodeProduto** produtos, NodeProduto** carrinho){
         continuar();
         return;
     }
+
     char* temp = NULL;
     NodeProduto** original = NULL;
     do{
         printf("Insira o codigo do produto: ");
-        //#warning temos que fazer algo diferente caso o produto ja esteja no carrinho
         temp = lerString();
         limpaConsole();
         original = buscarProduto(produtos, temp);
@@ -296,39 +296,55 @@ void adicionarCarrinho(NodeProduto** produtos, NodeProduto** carrinho){
             temp=NULL;
         }
     }while(temp==NULL);
+
+    NodeProduto** existente = buscarProduto(carrinho, temp);
     free(temp);
     temp=NULL;
+    if(existente!=NULL){
+        printf("Esse produto ja esta no seu carrinho.\n Para alterar a quantidade, digite \"alterar\".\nPara sair, pressione enter");
+        char* resposta = lerString();
+        int opcao;
+        if(compararString(resposta, "alterar")){
+            do{
+                printf("Quantidade atual: %d\n", (*existente)->produto->quantidade);
+                printf("Quantidade em estoque: %d\n", (*original)->produto->quantidade);
+                printf("O que deseja fazer?\n");
+                printf("1 - Alterar\n");
+                printf("2 - Voltar\n");
 
-    // verificar se o produto ja esta no carrinho
-    NodeProduto** talvezCarrinho = NULL;
-    talvezCarrinho = buscarProduto(carrinho,(*original)->produto->codigo);
-    if (talvezCarrinho != NULL){
-        printf("Produto ja esta no carrinho.\n");
-
-        int quantidade = -1;
-
-        do{
-            printf("Insira a quantidade do produto: ");
-
-            int control = scanf("%d",  &quantidade);
-            limpaBuffer();
-            if(control!=1 || quantidade<1){
-                quantidade=-1;
-                printf("Entrada invalida!\n");
-            }
-            if(quantidade>(*original)->produto->quantidade){
-                quantidade=-1;
-                printf("Nao existem tantos produtos em estoque!");
-            }
-        }while(quantidade<1);
-
-        (*talvezCarrinho)->produto->quantidade += quantidade;
-        (*original)->produto->quantidade -= quantidade; // mais feio que bater em mae
-        #warning temos que adicionar novamente apos limpar o carrinho;
+                int control = scanf("%d", &opcao);
+                limpaConsole();
+                limpaBuffer();
+                if(control!=1 || opcao<1 || opcao>2){
+                    printf("Entrada invalida!\n");
+                    opcao=-1;
+                }
+            }while(opcao<1 || opcao>2);
+            if(opcao==2)
+                return;
+            (*original)->produto->quantidade+=(*existente)->produto->quantidade;
+            (*existente)->produto->quantidade=0;
+            int quantidade=-1;
+            do{
+                printf("Estoque disponivel: %d\n", (*original)->produto->quantidade);
+                printf("Insira a nova quantidade: ");
+                int control = scanf("%d", &quantidade);
+                limpaBuffer();
+                if(control!=1 || quantidade<1 || quantidade>(*original)->produto->quantidade){
+                    printf("Quantidade invalida!\n");
+                    quantidade=-1;
+                }
+            }while(quantidade<1);
+            (*existente)->produto->quantidade = quantidade;
+            (*original)->produto->quantidade -= quantidade;
+            #warning temos que adicionar novamente ao remover o produto ou limpar o carrinho;
+            limpaConsole();
+            printf("Quantidade alterada com sucesso!\n");
+            continuar();
+            free(resposta);
+        }
         return;
     }
-    // verificar se o produto ja esta no carrinho
-
     NodeProduto* novoProduto = malloc(sizeof(NodeProduto));
     novoProduto->produto = malloc(sizeof(Produto));
     novoProduto->produto->codigo = copiarString((*original)->produto->codigo);
@@ -350,10 +366,14 @@ void adicionarCarrinho(NodeProduto** produtos, NodeProduto** carrinho){
             printf("Nao existem tantos produtos em estoque!");
         }
     }while(quantidade<1);
+
     novoProduto->produto->quantidade = quantidade;
-    (*original)->produto->quantidade -= quantidade; // eu sei que isso é feio
-    #warning temos que adicionar novamente apos limpar o carrinho;
+    (*original)->produto->quantidade -= quantidade;
+    #warning temos que adicionar novamente ao remover o produto ou limpar o carrinho;
 
     novoProduto->proximo=(*carrinho);
     (*carrinho)=novoProduto;
+
+    printf("Produto adicionado com sucesso!\n");
+    continuar();
 }
