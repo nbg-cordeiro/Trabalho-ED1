@@ -24,6 +24,8 @@ char* lerString(){
             char* temp = realloc(str,size * sizeof(char));
             if(temp==NULL){
                 perror("Erro ao realocar memoria em lerString()");
+                free(str);
+                str=NULL;
                 exit(EXIT_FAILURE);
             }
             str = temp;
@@ -33,6 +35,8 @@ char* lerString(){
     str[i]='\0';
     char* temp=realloc(str,i+1);
     if(temp==NULL){
+        free(str);
+        str=NULL;
         perror("Erro ao realocar memoria em lerString()");
         exit(EXIT_FAILURE);
     }
@@ -54,7 +58,30 @@ int compararString(char* string1, char* string2){
     return igual;
 }
 
+int tamanhoString(char* string){
+    if(string == NULL)
+        return 0;
+    int size = 0;
+    while(string[size]!='\0')
+        size++;
+    return (size+1);
+}
+
+char* copiarString(char* original){
+    if(original==NULL)
+        return NULL;
+    int tamanho = tamanhoString(original);
+    char* copia = malloc(sizeof(char) * tamanho);
+    if(copia==NULL){
+        perror("Erro ao alocar memoria em copiarString()");
+        exit(EXIT_FAILURE);
+    }
+    for(int i=0; i<tamanho; i++)
+        copia[i]=original[i];
+    return copia;
+}
+
 void continuar(){
-    printf("\nPressione qualquer tecla para continuar.\n");
+    printf("\nPressione enter para continuar.\n");
     getchar();
 }

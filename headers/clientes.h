@@ -29,6 +29,4 @@ void freeCliente(Cliente **);
 void removerCliente(node_Cliente**);
 void free_ListaClientes(node_Cliente**);
 
-void criarCarrinho(Cliente*);
-
 #endif

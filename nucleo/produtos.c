@@ -16,6 +16,11 @@ void imprimirProduto(Produto* produto){
 }
 
 void imprimePorCodigo(NodeProduto** lista){
+    if(lista == NULL || (*lista)==NULL){
+        printf("Nenhum produto cadastrado.\n");
+        continuar();
+        return;
+    }
     printf("Insira o codigo do produto: ");
     char* codigo1 = lerString();
     NodeProduto** produto1 = (buscarProduto(lista, codigo1));
@@ -27,13 +32,14 @@ void imprimePorCodigo(NodeProduto** lista){
     }
     printf("Produto:\n");
     imprimirProduto((*produto1)->produto);
+    printf("\n");
     continuar();
 }
 
 void listarProdutos(NodeProduto* lista){
     if(lista == NULL){
-        printf("Nenhum produto cadastrado.\nPressione qualquer tecla para continuar.\n");
-        getchar();
+        printf("Nenhum produto cadastrado.\n");
+        continuar();
         return;
     }
     int i = 1;
@@ -44,7 +50,6 @@ void listarProdutos(NodeProduto* lista){
         i++;
         lista=lista->proximo;
     }
-    continuar();
 }
 
 void adicionarProduto(NodeProduto** lista){
@@ -95,16 +100,21 @@ Produto* criarProduto(NodeProduto** lista){
         printf("Quantidade: ");
         int control = scanf("%d", &quantidade);
         limpaBuffer();
-        if(control!=1 || quantidade<0){
+        if(control!=1 || quantidade<1){
             printf("Entrada Invalida!\n");
             quantidade=-1;
         }
-    }while(quantidade<0);
+    }while(quantidade<1);
     novoProduto->quantidade=quantidade;
     return novoProduto;
 }
 
 void editarProduto(NodeProduto** lista){
+    if(lista == NULL || (*lista)==NULL){
+        printf("Nenhum produto cadastrado.\n");
+        continuar();
+        return;
+    }
     printf("Insira o codigo do produto: ");
     char* codigo = lerString();
     NodeProduto** node = (buscarProduto(lista, codigo));
@@ -117,7 +127,7 @@ void editarProduto(NodeProduto** lista){
     while(1){
         int opcao;
         do{
-            printf("Qual informação gostaria de editar?\n");
+            printf("Qual informacao gostaria de editar?\n");
             printf("1 - Codigo: %s\n", (*node)->produto->codigo);
             printf("2 - Nome: %s\n", (*node)->produto->nome);
             printf("3 - Preco: %.2lf\n", (*node)->produto->preco);
@@ -136,7 +146,8 @@ void editarProduto(NodeProduto** lista){
         int control, quantidade;
         switch (opcao)
         {
-            case 1:printf("Digite o novo código: ");
+            case 1:
+                printf("Digite o novo codigo: ");
                 do{
                     temp = lerString();
                     if(buscarProduto(lista,temp)!=NULL){
@@ -171,11 +182,11 @@ void editarProduto(NodeProduto** lista){
                     printf("Digite a nova Quantidade: ");
                     control = scanf("%d", &quantidade);
                     limpaBuffer();
-                    if(control!=1 || quantidade<0){
+                    if(control!=1 || quantidade<1){
                         printf("Entrada invalida!\n");
                         quantidade=-1;
                     }
-                }while(quantidade<0);
+                }while(quantidade<1);
                 (*node)->produto->quantidade=quantidade;
                 break;
             default:
@@ -188,6 +199,11 @@ void editarProduto(NodeProduto** lista){
 }
 
 void removerProduto(NodeProduto** lista){
+    if(lista == NULL || (*lista)==NULL){
+        printf("Nenhum produto cadastrado.\n");
+        continuar();
+        return;
+    }
     printf("Insira o codigo do produto: ");
     char* codigo = lerString();
     NodeProduto** node = (buscarProduto(lista, codigo));
@@ -236,4 +252,76 @@ void freeProdutos(NodeProduto** produtos){
 
         (*produtos)=aux;
     }
+}
+
+double somaProdutos(NodeProduto* lista){
+    double soma = 0;
+    while(lista!=NULL){
+        soma += lista->produto->preco * lista->produto->quantidade;
+        lista = lista->proximo;
+    }
+    return soma;
+}
+
+void listarCarrinho(NodeProduto* carrinho){
+    limpaConsole();
+    if(carrinho==NULL){
+        printf("Carrinho vazio!\n");
+        continuar();
+        return;
+    }
+    printf("\n====== Carrinho ======\n");
+    listarProdutos(carrinho);
+    printf("\nValor Total: R$ %.2lf\n",somaProdutos(carrinho));
+    continuar();
+}
+
+void adicionarCarrinho(NodeProduto** produtos, NodeProduto** carrinho){
+    if(produtos==NULL || (*produtos)==NULL){
+        printf("Nenhum produto cadastrado.\n");
+        continuar();
+        return;
+    }
+    char* temp = NULL;
+    NodeProduto** original = NULL;
+    do{
+        printf("Insira o codigo do produto: ");
+        #warning temos que fazer algo diferente caso o produto ja esteja no carrinho
+        temp = lerString();
+        limpaConsole();
+        original = buscarProduto(produtos, temp);
+        if(original==NULL || (*original)==NULL){
+            printf("Produto com codigo \"%s\", nao encontrado.\n", temp);
+            free(temp);
+            temp=NULL;
+        }
+    }while(temp==NULL);
+    free(temp);
+    temp=NULL;
+    NodeProduto* novoProduto = malloc(sizeof(NodeProduto));
+    novoProduto->produto = malloc(sizeof(Produto));
+    novoProduto->produto->codigo = copiarString((*original)->produto->codigo);
+    novoProduto->produto->nome = copiarString((*original)->produto->nome);
+    novoProduto->produto->preco = (*original)->produto->preco;
+    
+    int quantidade = -1;
+
+    do{
+        printf("Insira a quantidade do produto: ");
+        int control = scanf("%d",  &quantidade);
+        limpaBuffer();
+        if(control!=1 || quantidade<1){
+            quantidade=-1;
+            printf("Entrada invalida!\n");
+        }
+        if(quantidade>(*original)->produto->quantidade){
+            quantidade=-1;
+            printf("Nao existem tantos produtos em estoque!");
+        }
+    }while(quantidade<1);
+    novoProduto->produto->quantidade = quantidade;
+    #warning temos que subtrair do estoque original e adicionar novamente após limpar o carrinho;
+
+    novoProduto->proximo=(*carrinho);
+    (*carrinho)=novoProduto;
 }
