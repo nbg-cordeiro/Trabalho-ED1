@@ -32,6 +32,7 @@ void imprimePorCodigo(NodeProduto** lista){
     }
     printf("Produto:\n");
     imprimirProduto((*produto1)->produto);
+    printf("\n");
     continuar();
 }
 
@@ -49,7 +50,6 @@ void listarProdutos(NodeProduto* lista){
         i++;
         lista=lista->proximo;
     }
-    continuar();
 }
 
 void adicionarProduto(NodeProduto** lista){
@@ -254,11 +254,24 @@ void freeProdutos(NodeProduto** produtos){
     }
 }
 
-double somaProdutos(NodeProduto** lista){
+double somaProdutos(NodeProduto* lista){
     double soma = 0;
-    while((*lista)!=NULL){
-        soma += (*lista)->produto->preco * (*lista)->produto->quantidade;
-        lista = &((*lista)->proximo);
+    while(lista!=NULL){
+        soma += lista->produto->preco * lista->produto->quantidade;
+        lista = lista->proximo;
     }
     return soma;
+}
+
+void listarCarrinho(NodeProduto* carrinho){
+    limpaConsole();
+    if(carrinho==NULL){
+        printf("Carrinho vazio!\n");
+        continuar();
+        return;
+    }
+    printf("\n====== Carrinho ======\n");
+    listarProdutos(carrinho);
+    printf("\nValor Total: R$ %.2lf\n",somaProdutos(carrinho));
+    continuar();
 }
