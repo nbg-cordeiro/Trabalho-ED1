@@ -42,7 +42,7 @@ int menuPrincipal(NodeProduto** produtos, node_Cliente** clientes){
         switch(opcao){
             case 1: menuClientes(clientes); break;
             case 2: menuProdutos(produtos); break;
-            case 3: modoCompra(produtos, clientes);break;
+            case 3: modoCompra1(produtos, clientes);break;
             case 4: encerrar(produtos, clientes);break;
         }
     }
@@ -175,7 +175,7 @@ void modoCompra2(NodeProduto** produtos, node_Cliente* cliente){
         }while(opcao<1 || opcao>5);
         switch(opcao){
             case 1:listarProdutos(*produtos);continuar();break;
-            // case 2:adicionarCarrinho(*produtos, cliente->data->carrinho);break; (tem que criar)
+            case 2:adicionarCarrinho(produtos, &(cliente->data->carrinho));break;
             // case 3:removerCarrinho(&cliente);break; (tem que criar)
             case 4:listarCarrinho(cliente->data->carrinho);break;
             case 5:return;

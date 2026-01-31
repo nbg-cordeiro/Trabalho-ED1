@@ -93,13 +93,15 @@ void criarCliente(node_Cliente *head){
 
 
     printf("Data de nascimento:");
-    char* aniversaro = lerString();
-    novoCliente->dataNascimento = aniversaro;
+    char* aniversario = lerString();
+    novoCliente->dataNascimento = aniversario;
 
     printf("Telefone de contato:");
     char* telefone = lerString();
     novoCliente->telefone = telefone;
 
+    novoCliente->carrinho=NULL;
+    
     printf("\nCliente cadastrado com exito.\n");
 
     imprimeCliente(novoCliente);
@@ -240,7 +242,7 @@ void buscarCliente(node_Cliente **head){
     }
     node_Cliente *cliente = buscarCPF(temp, (*head));
     if (cliente == NULL){
-        printf("Cliente não foi encontrad.");
+        printf("Cliente não foi encontrado.");
         return;
     }
 
@@ -256,11 +258,9 @@ void freeCliente(Cliente** cliente){
     free((*cliente)->cpf);
     free((*cliente)->dataNascimento);
     free((*cliente)->telefone);
+    freeProdutos(&((*cliente)->carrinho));
     free(*cliente);
     (*cliente) = NULL;
-
-    //free(carrinho);
-
 }
 
 void removerCliente(node_Cliente** head){
