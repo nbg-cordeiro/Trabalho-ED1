@@ -73,9 +73,7 @@ void menuClientes(node_Cliente** head){
     case 3: buscarCliente(head); break;
     case 4: editarCliente((*head)); break;
     case 5: removerCliente(head);break;
-    default:
-        return;
-        break;
+    case 6: return;
     }
 }
 

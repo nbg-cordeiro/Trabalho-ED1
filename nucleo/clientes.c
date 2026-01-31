@@ -1,13 +1,5 @@
 #include "clientes.h"
 
-/* to-do
-
-fazer uma verificação de dados tanto pro criarCliente() como pro editarCliente()
-mudar cpf, telefone e nascimento pra int
-
-*/
-
-
 void InserirNode(node_Cliente *head, Cliente * dado){
     node_Cliente *novo = malloc(sizeof(node_Cliente));
     if (novo == NULL){
@@ -36,6 +28,7 @@ void imprimirClientes(node_Cliente **head){
     if ((*head)->proximo == NULL){
         printf("Nenhum cliente cadastrado.");
         printf("\n============================\n");
+        continuar();
         return;
     }
 
@@ -44,6 +37,7 @@ void imprimirClientes(node_Cliente **head){
         imprimeCliente(p->data);
     }
 
+    continuar();
 }
 
 void criarCliente(node_Cliente *head){
@@ -53,14 +47,48 @@ void criarCliente(node_Cliente *head){
         exit(EXIT_FAILURE);
     }
 
-    printf("Novo cliente:\nNome:");
-    char* nome = lerString();
-    novoCliente->nome = nome;
+    char* nome = NULL;
+    do{
+        printf("Novo cliente:\nNome:");
+        nome = lerString();
 
+        if (nome == NULL){
+            perror("Nao foi possivel alocar memoria em criarCliente().");
+            continue;
+        }
+        
+        if (*nome == '\0'){
+            printf("Entrada invalida. Tente novamente.\n");
+            free(nome);
+            nome = NULL;
+        }
+    } while (nome == NULL);
+    novoCliente->nome = nome;
+   
     printf("Insira os dados a seguir sem pontuacao ('/', '-' e/ou '.') e sem espacamento.\n");
 
-    printf("CPF: ");
-    char* cpf = lerString();
+    char* cpf = NULL;
+    do
+    {
+        printf("CPF: ");
+        cpf = lerString();
+
+        if (cpf == NULL){
+            perror("Nao foi possivel alocar memoria em criarCliente().");
+            continue;
+        }
+        if (*cpf == '\0'){
+            printf("Entrada invalida. Tente novamente.\n");
+            free(cpf);
+            cpf = NULL;
+        }
+        if (buscarCPF(cpf,head) != NULL){
+            printf("Esse CPF ja esta cadastrado!\n");
+            free(cpf);
+            cpf = NULL;
+        }
+        
+    } while (cpf == NULL);
     novoCliente->cpf = cpf;
 
 
@@ -77,6 +105,8 @@ void criarCliente(node_Cliente *head){
     imprimeCliente(novoCliente);
 
     InserirNode(head,novoCliente);
+
+    continuar();
 }
 
 void editarCliente(node_Cliente *head){
@@ -125,16 +155,26 @@ void editarCliente(node_Cliente *head){
             (cliente)->data->nome = temp;
             break;
         case 2:
-            printf("Digite novo CPF: ");
             do{
+                printf("Digite novo CPF: ");
                 temp = lerString();
-                if (buscarCPF(temp,head) != NULL){
-                    printf("Esse CPF ja esta cadastrado.\n");
+
+                if (temp == NULL){
+                    perror("Nao foi possivel alocar memoria em criarCliente().");
+                    continue;
+                }
+                if (*temp == '\0'){
+                    printf("Entrada invalida. Tente novamente.\n");
                     free(temp);
                     temp = NULL;
                 }
-            } while (temp != NULL);
-
+                if (buscarCPF(temp,head) != NULL){
+                    printf("Esse CPF ja esta cadastrado!\n");
+                    free(temp);
+                    temp = NULL;
+                }
+            } while (temp == NULL);
+            
             free((cliente)->data->cpf);
             (cliente)->data->cpf = temp;
             break;
@@ -160,6 +200,7 @@ void editarCliente(node_Cliente *head){
     
     printf("\nDado atualizado com exito.\n\n");
     imprimeCliente(cliente->data);
+    continuar();
     }
     
 }
@@ -207,7 +248,7 @@ void buscarCliente(node_Cliente **head){
     imprimeCliente(cliente->data);
     free(temp);
 
-    return;
+    continuar();
 }
 
 void freeCliente(Cliente** cliente){
@@ -264,6 +305,8 @@ void removerCliente(node_Cliente** head){
     freeCliente(&(delete->data));
     free(delete);
     free(temp);
+
+    continuar();
 }
 
 void free_ListaClientes(node_Cliente** lista){

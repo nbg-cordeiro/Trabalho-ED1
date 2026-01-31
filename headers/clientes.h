@@ -18,13 +18,17 @@ typedef struct node_Cliente{
 
 }node_Cliente;
 
+void InserirNode(node_Cliente *, Cliente *);
+void imprimeCliente(Cliente *);
+void imprimirClientes(node_Cliente **);
+void criarCliente(node_Cliente *);
 void editarCliente(node_Cliente *head);
 node_Cliente* buscarCPF(char*, node_Cliente*);
 void buscarCliente(node_Cliente **);
+void freeCliente(Cliente **);
 void removerCliente(node_Cliente**);
-void imprimirClientes(node_Cliente **);
-void criarCliente(node_Cliente *);
-void criarCarrinho(Cliente*);
 void free_ListaClientes(node_Cliente**);
+
+void criarCarrinho(Cliente*);
 
 #endif
