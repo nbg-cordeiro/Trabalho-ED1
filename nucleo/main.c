@@ -4,7 +4,7 @@
 
 int menuPrincipal(NodeProduto**, node_Cliente**);
 void menuProdutos(NodeProduto**);
-void menuClientes(node_Cliente**);
+void menuClientes(node_Cliente**, NodeProduto**);
 void modoCompra1(NodeProduto**, node_Cliente**);
 void modoCompra2(NodeProduto**, node_Cliente*);
 void encerrar(NodeProduto**, node_Cliente**);
@@ -40,7 +40,7 @@ int menuPrincipal(NodeProduto** produtos, node_Cliente** clientes){
         }while(opcao<1 || opcao>4);
 
         switch(opcao){
-            case 1: menuClientes(clientes); break;
+            case 1: menuClientes(clientes, produtos); break;
             case 2: menuProdutos(produtos); break;
             case 3: modoCompra1(produtos, clientes);break;
             case 4: encerrar(produtos, clientes);break;
@@ -48,7 +48,7 @@ int menuPrincipal(NodeProduto** produtos, node_Cliente** clientes){
     }
 }
 
-void menuClientes(node_Cliente** head){
+void menuClientes(node_Cliente** head, NodeProduto** estoque){
     while(1){
         limpaConsole();
         int opcao = -1;
@@ -77,7 +77,7 @@ void menuClientes(node_Cliente** head){
             case 2: imprimirClientes(head); break;
             case 3: buscarCliente(head); break;
             case 4: editarCliente((*head)); break;
-            case 5: removerCliente(head);break;
+            case 5: removerCliente(head, estoque);break;
             case 6: return;
         }
     }
@@ -195,7 +195,7 @@ void encerrar(NodeProduto** produtos, node_Cliente** clientes){
         return;
     }
     free(resposta);
-    free_ListaClientes(clientes);
+    free_ListaClientes(clientes, produtos);
     freeProdutos(produtos);
     printf("Saindo...");
     exit(EXIT_SUCCESS);

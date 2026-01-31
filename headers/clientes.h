@@ -25,8 +25,9 @@ void criarCliente(node_Cliente *);
 void editarCliente(node_Cliente *head);
 node_Cliente* buscarCPF(char*, node_Cliente*);
 void buscarCliente(node_Cliente **);
-void freeCliente(Cliente **);
-void removerCliente(node_Cliente**);
-void free_ListaClientes(node_Cliente**);
+void freeCliente(Cliente **, NodeProduto**);
+void removerCliente(node_Cliente**, NodeProduto**);
+void free_ListaClientes(node_Cliente**, NodeProduto**);
+void freeCarrinho(NodeProduto**, NodeProduto**);
 
 #endif
