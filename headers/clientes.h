@@ -28,6 +28,7 @@ void buscarCliente(node_Cliente **);
 void freeCliente(Cliente **, NodeProduto**);
 void removerCliente(node_Cliente**, NodeProduto**);
 void free_ListaClientes(node_Cliente**, NodeProduto**);
+void removerCarrinho(NodeProduto**, NodeProduto**);
 void freeCarrinho(NodeProduto**, NodeProduto**);
 
 #endif

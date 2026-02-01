@@ -301,7 +301,7 @@ void adicionarCarrinho(NodeProduto** produtos, NodeProduto** carrinho){
     free(temp);
     temp=NULL;
     if(existente!=NULL){
-        printf("Esse produto ja esta no seu carrinho.\n Para alterar a quantidade, digite \"alterar\".\nPara sair, pressione enter");
+        printf("Esse produto ja esta no seu carrinho.\nPara alterar a quantidade, digite \"alterar\". Para sair, pressione enter.\n");
         char* resposta = lerString();
         int opcao;
         if(compararString(resposta, "alterar")){
@@ -337,7 +337,6 @@ void adicionarCarrinho(NodeProduto** produtos, NodeProduto** carrinho){
             }while(quantidade<1);
             (*existente)->produto->quantidade = quantidade;
             (*original)->produto->quantidade -= quantidade;
-            #warning temos que adicionar novamente ao remover o produto ou limpar o carrinho;
             limpaConsole();
             printf("Quantidade alterada com sucesso!\n");
             continuar();
@@ -369,7 +368,6 @@ void adicionarCarrinho(NodeProduto** produtos, NodeProduto** carrinho){
 
     novoProduto->produto->quantidade = quantidade;
     (*original)->produto->quantidade -= quantidade;
-    #warning temos que adicionar novamente ao remover o produto ou limpar o carrinho;
 
     novoProduto->proximo=(*carrinho);
     (*carrinho)=novoProduto;
