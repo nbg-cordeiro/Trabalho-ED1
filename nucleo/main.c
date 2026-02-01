@@ -159,6 +159,7 @@ void modoCompra1(NodeProduto** produtos, NodeCliente** clientes){
 }
 
 void modoCompra2(NodeProduto** produtos, NodeCliente* cliente){
+    verificarCarrinho(produtos,&(cliente->data->carrinho));
     while(1){
         limpaConsole();
         int opcao=-1;

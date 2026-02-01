@@ -1,6 +1,6 @@
 #include "compras.h"
-#warning Se um produto for deletado do estoque, ele nao sera removido dos carrinhos dos clientes!
-// Tem que mudar a estrutura de verificacao das funcoes de carrinho. Para verificar dentro do carrinho antes de verificar o estoque (eu acho).
+#warning precisa testar o verificarCarrinho() mais vezes, mas acho que ele ja funciona
+// Tem que mudar a estrutura de verificacao das funcoes de carrinho. Para verificar dentro do carrinho antes de verificar o estoque (eu acho). (só mudei a estrutura do remover)
 void listarCarrinho(NodeProduto* carrinho){
     limpaConsole();
     if(carrinho==NULL){
@@ -14,7 +14,7 @@ void listarCarrinho(NodeProduto* carrinho){
     continuar();
 }
 
-void adicionarCarrinho(NodeProduto** produtos, NodeProduto** carrinho){
+void adicionarCarrinho(NodeProduto** produtos, NodeProduto** carrinho){ //(ainda acho importante verificar se o produto existe no estoque primeiro)
     if(produtos==NULL || (*produtos)==NULL){
         printf("Nenhum produto cadastrado.\n");
         continuar();
@@ -163,27 +163,29 @@ void removerCarrinho(NodeProduto** carrinho, NodeProduto** estoque){
 
     char * temp = NULL;
     printf("Remover do carrinho\n");
-    NodeProduto** original = NULL;
+    NodeProduto** del_carrinho = NULL;
     do{
         printf("Digite o codigo do produto a ser removido: ");
         temp = lerString();
         limpaConsole();
-        original = buscarProduto(estoque, temp);
-        if(original==NULL || (*original)==NULL){
+        del_carrinho = buscarProduto(carrinho,temp);
+        if(del_carrinho==NULL || (*del_carrinho)==NULL){
             printf("Produto com codigo \"%s\", nao encontrado.\n", temp);
             free(temp);
             temp=NULL;
         }
     }while(temp==NULL);
 
-    NodeProduto** del_carrinho = NULL;
-    del_carrinho = buscarProduto(carrinho,temp);
-
     free(temp);
     temp = NULL;
 
     if (del_carrinho != NULL){
-        (*original)->produto->quantidade += (*del_carrinho)->produto->quantidade; // funfact: antes estava (*estoque)->produto->quantidade (xD)
+        NodeProduto** original = NULL;
+
+        original = buscarProduto(estoque, (*del_carrinho)->produto->codigo);
+        if (original != NULL && *original != NULL){
+            (*original)->produto->quantidade += (*del_carrinho)->produto->quantidade;
+        }
 
         NodeProduto* aux = (*del_carrinho)->proximo;
         
@@ -198,6 +200,10 @@ void removerCarrinho(NodeProduto** carrinho, NodeProduto** estoque){
 
         free(*del_carrinho);
         *del_carrinho = aux;
+        
+        printf("Produto removido do carrinho.");
+
+        continuar();
         
         return;
     }    
@@ -235,4 +241,74 @@ void freeCarrinho (NodeProduto** carrinho, NodeProduto** estoque){
     }
 
     *carrinho = NULL;
+}
+
+void verificarCarrinho(NodeProduto** estoque, NodeProduto** carrinho){
+    if (carrinho == NULL || (*carrinho) == NULL){
+        return;
+    }
+
+    int printarAviso = 0;
+
+    while ((*carrinho) != NULL){
+
+        int alteracao = 0;
+
+        NodeProduto* aux = NULL;
+
+        if ((*carrinho)->produto == NULL){
+            aux = (*carrinho)->proximo;
+            free(*carrinho);
+            (*carrinho) = aux;
+            continue;
+        }
+
+        NodeProduto** original = buscarProduto(estoque,(*carrinho)->produto->codigo);
+        if (original != NULL && (*original) != NULL){
+
+            if (compararString((*carrinho)->produto->nome,(*original)->produto->nome) == 1){
+
+                if ((*carrinho)->produto->preco != (*original)->produto->preco){
+                    (*carrinho)->produto->preco = (*original)->produto->preco;
+                }
+
+            }else{
+                alteracao = 1;
+            }
+
+        }else{
+            alteracao = 1;
+        }
+
+        if (alteracao == 1){
+            aux = (*carrinho)->proximo;
+
+            if ((*carrinho)->produto != NULL){
+
+                free((*carrinho)->produto->codigo);
+                (*carrinho)->produto->codigo = NULL;
+                
+                free((*carrinho)->produto->nome);
+                (*carrinho)->produto->nome = NULL;
+                
+                free((*carrinho)->produto);
+                (*carrinho)->produto = NULL;
+            }
+
+            free(*carrinho);
+
+            (*carrinho) = aux;
+
+            printarAviso++;
+
+        }else{
+            carrinho = &(*carrinho)->proximo;
+        }
+    }
+
+    if (printarAviso != 0){
+        printf("\n===== Aviso! =====\nO sistema encontrou %d produto(s) nao cadastrado(s) no sistema.\nEstes mesmos foram removidos do carrinho.\n",printarAviso);
+        continuar();
+
+    }
 }

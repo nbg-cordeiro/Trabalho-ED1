@@ -8,5 +8,6 @@ void listarCarrinho(NodeProduto*);
 void adicionarCarrinho(NodeProduto**, NodeProduto**);
 void removerCarrinho(NodeProduto**, NodeProduto**);
 void freeCarrinho(NodeProduto**, NodeProduto**);
+void verificarCarrinho(NodeProduto**, NodeProduto**);
 
 #endif
