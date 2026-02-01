@@ -176,7 +176,7 @@ void modoCompra2(NodeProduto** produtos, node_Cliente* cliente){
         switch(opcao){
             case 1:listarProdutos(*produtos);continuar();break;
             case 2:adicionarCarrinho(produtos, &(cliente->data->carrinho));break;
-            // case 3:removerCarrinho(&cliente);break; (tem que criar)
+            case 3:removerCarrinho(&(cliente->data->carrinho), produtos);break;
             case 4:listarCarrinho(cliente->data->carrinho);break;
             case 5:return;
         }
