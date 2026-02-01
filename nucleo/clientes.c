@@ -1,7 +1,7 @@
 #include "clientes.h"
 
-void InserirNode(node_Cliente *head, Cliente * dado){
-    node_Cliente *novo = malloc(sizeof(node_Cliente));
+void InserirNode(NodeCliente *head, Cliente * dado){
+    NodeCliente *novo = malloc(sizeof(NodeCliente));
     if (novo == NULL){
         perror("Erro ao alocar memória em InserirNode().");
         exit(EXIT_FAILURE);
@@ -22,7 +22,7 @@ void imprimeCliente(Cliente * cliente){
     printf("\n============================\n");
 }
 
-void imprimirClientes(node_Cliente **head){
+void imprimirClientes(NodeCliente **head){
     printf("\n====== LISTA CLIENTES ======\n");
 
     if ((*head)->proximo == NULL){
@@ -32,7 +32,7 @@ void imprimirClientes(node_Cliente **head){
         return;
     }
 
-    node_Cliente *p;
+    NodeCliente *p;
     for (p = (*head)->proximo; p != NULL; p = p->proximo){
         imprimeCliente(p->data);
     }
@@ -40,7 +40,7 @@ void imprimirClientes(node_Cliente **head){
     continuar();
 }
 
-void criarCliente(node_Cliente *head){
+void criarCliente(NodeCliente *head){
     Cliente* novoCliente = malloc(sizeof(Cliente));
     if (novoCliente == NULL){
         perror("Erro ao alocar memória em criarCliente().");
@@ -111,12 +111,12 @@ void criarCliente(node_Cliente *head){
     continuar();
 }
 
-void editarCliente(node_Cliente *head){
+void editarCliente(NodeCliente *head){
 
     printf("Nao utilize pontuacoes ('/' '.' '-') ou espaco.\n");
     printf("Digite o CPF do cliente: ");
     char *cpf = lerString();
-    node_Cliente *cliente = buscarCPF(cpf,head);
+    NodeCliente *cliente = buscarCPF(cpf,head);
     free(cpf);
 
     if (cliente == NULL){
@@ -207,40 +207,34 @@ void editarCliente(node_Cliente *head){
     
 }
 
-node_Cliente* buscarCPF(char* cpf, node_Cliente *head){
+NodeCliente* buscarCPF(char* cpf, NodeCliente *head){
     if (cpf == NULL){
         perror("Entrada de dados invalidos em buscarCPF().");
         return NULL;
     }
-    node_Cliente *atual;
-    atual = head;
+    NodeCliente *atual;
+    atual = head->proximo;
 
     while (atual != NULL ){
-        if (atual->data != NULL){
-            if (compararString(atual->data->cpf,cpf) == 1){
+        if (compararString(atual->data->cpf,cpf) == 1)
             return atual;
-        }
-
-        }
-        
         atual = atual->proximo;
     }
-
     return NULL;
 }
 
 
-void buscarCliente(node_Cliente **head){
+void buscarCliente(NodeCliente **head){
     printf("\nBuscar Cliente:\n");
     printf("Nao utilize nenhuma acentuacao ('/', '-', '.') ou espacamento.\n");
     printf("- Digite o CPF do cliente: ");
 
-    char * temp = NULL;
-    temp = lerString();
+    char * temp = lerString();
     if (temp == NULL){
         return;
     }
-    node_Cliente *cliente = buscarCPF(temp, (*head));
+    NodeCliente *cliente = buscarCPF(temp, (*head));
+    free(temp);
     if (cliente == NULL){
         printf("Cliente não foi encontrado.");
         return;
@@ -248,7 +242,6 @@ void buscarCliente(node_Cliente **head){
 
     printf("\n====== BUSCAR CLIENTE ======\n");
     imprimeCliente(cliente->data);
-    free(temp);
 
     continuar();
 }
@@ -263,7 +256,7 @@ void freeCliente(Cliente** cliente, NodeProduto** estoque){
     (*cliente) = NULL;
 }
 
-void removerCliente(node_Cliente** head, NodeProduto** estoque){
+void removerCliente(NodeCliente** head, NodeProduto** estoque){
     if (head == NULL || (*head) == NULL){
         return;
     }
@@ -272,60 +265,49 @@ void removerCliente(node_Cliente** head, NodeProduto** estoque){
     printf("Nao utilize nenhuma acentuacao ('/', '-', '.') ou espacamento.\n");
     printf("- Digite o CPF do cliente: ");
 
-    char * temp = NULL;
-    
-    temp = lerString();
+    char * temp = lerString();
+
     if (temp == NULL){
         perror("Erro ao alocar memoria em removerCliente():lerString().");
         return;
     }
 
-    node_Cliente * delete = NULL;
+    NodeCliente * delete = buscarCPF(temp, (*head));
+    free(temp);
 
-    
-    delete = buscarCPF(temp, (*head));
     if (delete == NULL){
         printf("CPF inserido nao esta cadastrado.");
         return;
     }
+    NodeCliente *anterior = (*head);
 
-    if ((*head) == delete){
-        (*head = delete->proximo);
-    } else{
-        node_Cliente *anterior;
-        anterior = (*head);
-        while (anterior != NULL && anterior->proximo != delete){
-            anterior = anterior->proximo;
-        }
-        if (anterior != NULL){
+    while (anterior != NULL && anterior->proximo != delete)
+        anterior = anterior->proximo;
+
+    if (anterior != NULL)
         anterior->proximo = delete->proximo;
-        }
-    }
     
     freeCliente(&(delete->data), estoque);
     free(delete);
-    free(temp);
 
     continuar();
 }
 
-void free_ListaClientes(node_Cliente** lista, NodeProduto** estoque){
+void free_ListaClientes(NodeCliente** lista, NodeProduto** estoque){
     if (lista == NULL || (*lista) == NULL){
         return;
     }
 
-    node_Cliente* atual = (*lista);
+    NodeCliente* atual = (*lista);
 
     while (atual != NULL){
-        node_Cliente* prox = atual->proximo;
-
-        if (atual->data != NULL){
+        NodeCliente* prox = atual->proximo;
+        if (atual->data != NULL)
             freeCliente(&(atual->data), estoque);
-        }
         free(atual);
-
         atual = prox;
     }
+    *lista = NULL;
 }
 
 void removerCarrinho(NodeProduto** carrinho, NodeProduto** estoque){

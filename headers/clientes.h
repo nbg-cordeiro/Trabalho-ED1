@@ -12,22 +12,22 @@ typedef struct Cliente{
     NodeProduto* carrinho;
 }Cliente;
 
-typedef struct node_Cliente{
+typedef struct NodeCliente{
     Cliente* data;
-    struct node_Cliente* proximo;
+    struct NodeCliente* proximo;
 
-}node_Cliente;
+}NodeCliente;
 
-void InserirNode(node_Cliente *, Cliente *);
+void InserirNode(NodeCliente *, Cliente *);
 void imprimeCliente(Cliente *);
-void imprimirClientes(node_Cliente **);
-void criarCliente(node_Cliente *);
-void editarCliente(node_Cliente *head);
-node_Cliente* buscarCPF(char*, node_Cliente*);
-void buscarCliente(node_Cliente **);
+void imprimirClientes(NodeCliente **);
+void criarCliente(NodeCliente *);
+void editarCliente(NodeCliente *head);
+NodeCliente* buscarCPF(char*, NodeCliente*);
+void buscarCliente(NodeCliente **);
 void freeCliente(Cliente **, NodeProduto**);
-void removerCliente(node_Cliente**, NodeProduto**);
-void free_ListaClientes(node_Cliente**, NodeProduto**);
+void removerCliente(NodeCliente**, NodeProduto**);
+void free_ListaClientes(NodeCliente**, NodeProduto**);
 void removerCarrinho(NodeProduto**, NodeProduto**);
 void freeCarrinho(NodeProduto**, NodeProduto**);
 

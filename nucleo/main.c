@@ -2,23 +2,28 @@
 #include "produtos.h"
 #include "clientes.h"
 
-int menuPrincipal(NodeProduto**, node_Cliente**);
+int menuPrincipal(NodeProduto**, NodeCliente**);
 void menuProdutos(NodeProduto**);
-void menuClientes(node_Cliente**, NodeProduto**);
-void modoCompra1(NodeProduto**, node_Cliente**);
-void modoCompra2(NodeProduto**, node_Cliente*);
-void encerrar(NodeProduto**, node_Cliente**);
+void menuClientes(NodeCliente**, NodeProduto**);
+void modoCompra1(NodeProduto**, NodeCliente**);
+void modoCompra2(NodeProduto**, NodeCliente*);
+void encerrar(NodeProduto**, NodeCliente**);
 
 int main ()
 {
     NodeProduto* listaProdutos = NULL;
-    node_Cliente* listaClientes = malloc(sizeof(node_Cliente));
+    NodeCliente* listaClientes = malloc(sizeof(NodeCliente));
+    if(listaClientes == NULL){
+        perror("Erro ao alocar memoria para lista de clientes em main().");
+        exit(EXIT_FAILURE);
+    }
     listaClientes->data = NULL;
     listaClientes->proximo = NULL;
+    
     menuPrincipal(&listaProdutos, &listaClientes);
 }
 
-int menuPrincipal(NodeProduto** produtos, node_Cliente** clientes){
+int menuPrincipal(NodeProduto** produtos, NodeCliente** clientes){
     while(1){
         limpaConsole();
         int opcao=-1;
@@ -48,7 +53,7 @@ int menuPrincipal(NodeProduto** produtos, node_Cliente** clientes){
     }
 }
 
-void menuClientes(node_Cliente** head, NodeProduto** estoque){
+void menuClientes(NodeCliente** head, NodeProduto** estoque){
     while(1){
         limpaConsole();
         int opcao = -1;
@@ -117,7 +122,7 @@ void menuProdutos(NodeProduto** lista){
     }
 }
 
-void modoCompra1(NodeProduto** produtos, node_Cliente** clientes){
+void modoCompra1(NodeProduto** produtos, NodeCliente** clientes){
     while(1){
         limpaConsole();
         if(produtos == NULL || *produtos == NULL || clientes == NULL || *clientes == NULL || (*clientes)->proximo == NULL){
@@ -126,7 +131,7 @@ void modoCompra1(NodeProduto** produtos, node_Cliente** clientes){
             return;
         }
         char* temp = NULL;
-        node_Cliente* cliente = NULL;
+        NodeCliente* cliente = NULL;
         do{
             printf("\n====== MODO COMPRA ======\n");
             printf("Para sair, digite \"sair\".\nPara continuar digite seu CPF.\n");
@@ -152,7 +157,7 @@ void modoCompra1(NodeProduto** produtos, node_Cliente** clientes){
     }
 }
 
-void modoCompra2(NodeProduto** produtos, node_Cliente* cliente){
+void modoCompra2(NodeProduto** produtos, NodeCliente* cliente){
     while(1){
         limpaConsole();
         int opcao=-1;
@@ -183,7 +188,7 @@ void modoCompra2(NodeProduto** produtos, node_Cliente* cliente){
     }
 }
 
-void encerrar(NodeProduto** produtos, node_Cliente** clientes){
+void encerrar(NodeProduto** produtos, NodeCliente** clientes){
     limpaConsole();
     printf("Caso deseje sair, digite \"sair\"\n");
     char* resposta = lerString();

@@ -67,6 +67,10 @@ void adicionarProduto(NodeProduto** lista){
 
 Produto* criarProduto(NodeProduto** lista){
     Produto* novoProduto = malloc(sizeof(Produto));
+    if(novoProduto==NULL){
+        perror("Erro ao alocar memoria em criarProduto()");
+        exit(EXIT_FAILURE);
+    }
     char* codigo=NULL;
     do{
         printf("Novo produto:\nCodigo: ");
@@ -320,8 +324,10 @@ void adicionarCarrinho(NodeProduto** produtos, NodeProduto** carrinho){
                     opcao=-1;
                 }
             }while(opcao<1 || opcao>2);
-            if(opcao==2)
+            if(opcao==2){
+                free(resposta);
                 return;
+            }
             (*original)->produto->quantidade+=(*existente)->produto->quantidade;
             (*existente)->produto->quantidade=0;
             int quantidade=-1;
@@ -340,12 +346,22 @@ void adicionarCarrinho(NodeProduto** produtos, NodeProduto** carrinho){
             limpaConsole();
             printf("Quantidade alterada com sucesso!\n");
             continuar();
-            free(resposta);
         }
+        free(resposta);
         return;
     }
     NodeProduto* novoProduto = malloc(sizeof(NodeProduto));
+    if(novoProduto==NULL){
+        perror("Erro ao alocar memoria em adicionarCarrinho()");
+        exit(EXIT_FAILURE);
+    }
+
     novoProduto->produto = malloc(sizeof(Produto));
+    if(novoProduto->produto==NULL){
+        perror("Erro ao alocar memoria em adicionarCarrinho()");
+        exit(EXIT_FAILURE);
+    }
+    
     novoProduto->produto->codigo = copiarString((*original)->produto->codigo);
     novoProduto->produto->nome = copiarString((*original)->produto->nome);
     novoProduto->produto->preco = (*original)->produto->preco;
