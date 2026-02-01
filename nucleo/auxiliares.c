@@ -7,7 +7,11 @@ void limpaBuffer(void){
 }
 
 void limpaConsole(void){
-    printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+    #ifdef _WIN32
+         system("cls");
+    #else
+        printf("\033[H\033[J");
+    #endif
 }
 
 char* lerString(){
@@ -46,6 +50,8 @@ char* lerString(){
 
 int compararString(char* string1, char* string2){
     int igual = 1, i = 0;
+    if(string1==NULL || string2==NULL)
+        return 0;
     while(1){
         if(string1[i]!=string2[i]){
             igual=0;

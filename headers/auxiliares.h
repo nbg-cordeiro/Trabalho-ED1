@@ -10,6 +10,6 @@ char* lerString(void);
 int compararString(char*, char*);
 char* copiarString(char*);
 int tamanhoString(char*);
-void continuar();
+void continuar(void);
 
 #endif
