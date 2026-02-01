@@ -1,4 +1,5 @@
 #include "clientes.h"
+#include "compras.h"
 
 void InserirNode(NodeCliente *head, Cliente * dado){
     NodeCliente *novo = malloc(sizeof(NodeCliente));
@@ -308,85 +309,4 @@ void free_ListaClientes(NodeCliente** lista, NodeProduto** estoque){
         atual = prox;
     }
     *lista = NULL;
-}
-
-void removerCarrinho(NodeProduto** carrinho, NodeProduto** estoque){
-    if (carrinho == NULL || (*carrinho) == NULL){
-        return;
-    }
-
-    char * temp = NULL;
-    printf("Remover do carrinho\n");
-    NodeProduto** original = NULL;
-    do{
-        printf("Digite o codigo do produto a ser removido: ");
-        temp = lerString();
-        limpaConsole();
-        original = buscarProduto(estoque, temp);
-        if(original==NULL || (*original)==NULL){
-            printf("Produto com codigo \"%s\", nao encontrado.\n", temp);
-            free(temp);
-            temp=NULL;
-        }
-    }while(temp==NULL);
-
-    NodeProduto** del_carrinho = NULL;
-    del_carrinho = buscarProduto(carrinho,temp);
-
-    free(temp);
-    temp = NULL;
-
-    if (del_carrinho != NULL){
-        (*original)->produto->quantidade += (*del_carrinho)->produto->quantidade; // funfact: antes estava (*estoque)->produto->quantidade (xD)
-
-        NodeProduto* aux = (*del_carrinho)->proximo;
-        
-        free((*del_carrinho)->produto->codigo);
-        (*del_carrinho)->produto->codigo = NULL;
-
-        free((*del_carrinho)->produto->nome);
-        (*del_carrinho)->produto->nome = NULL;
-
-        free((*del_carrinho)->produto);
-        (*del_carrinho)->produto = NULL;
-
-        free(*del_carrinho);
-        *del_carrinho = aux;
-        
-        return;
-    }    
-}
-
-void freeCarrinho (NodeProduto** carrinho, NodeProduto** estoque){
-    if (carrinho == NULL || (*carrinho) == NULL){
-        return;
-    }
-
-
-    while ((*carrinho) != NULL){
-        NodeProduto* aux = (*carrinho)->proximo;
-
-        if ((*carrinho)->produto != NULL){
-            NodeProduto** original = NULL;
-            original = buscarProduto(estoque, (*carrinho)->produto->codigo);
-
-            if (original != NULL && *original != NULL){
-                (*original)->produto->quantidade += (*carrinho)->produto->quantidade;
-            }
-
-            free((*carrinho)->produto->codigo);
-            (*carrinho)->produto->codigo = NULL;
-
-            free((*carrinho)->produto->nome);
-            (*carrinho)->produto->nome = NULL;
-
-            free((*carrinho)->produto);
-            (*carrinho)->produto = NULL;
-        }
-
-        free(*carrinho);
-        (*carrinho) = aux;
-    }
-
-    *carrinho = NULL;
 }

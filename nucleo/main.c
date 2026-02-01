@@ -1,6 +1,7 @@
 #include "auxiliares.h"
 #include "produtos.h"
 #include "clientes.h"
+#include "compras.h"
 
 int menuPrincipal(NodeProduto**, NodeCliente**);
 void menuProdutos(NodeProduto**);

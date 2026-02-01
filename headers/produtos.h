@@ -25,7 +25,5 @@ void freeProdutos(NodeProduto**);
 void adicionarProduto(NodeProduto**);
 void imprimePorCodigo(NodeProduto**);
 double somaProdutos(NodeProduto*);
-void listarCarrinho(NodeProduto*);
-void adicionarCarrinho(NodeProduto**, NodeProduto**);
 
 #endif
