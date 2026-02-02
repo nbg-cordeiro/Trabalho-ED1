@@ -1,6 +1,9 @@
 #include "produtos.h"
 
 NodeProduto** buscarProduto(NodeProduto** lista, char* codigo){
+    if (lista == NULL)
+        return NULL;
+    
     while((*lista)!=NULL){
         if((compararString((*lista)->produto->codigo, codigo))){
             return lista;

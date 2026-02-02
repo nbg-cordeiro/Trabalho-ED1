@@ -122,6 +122,7 @@ void editarCliente(NodeCliente *head){
 
     if (cliente == NULL){
         printf("Cliente nao cadastrado no sistema.");
+        continuar();
         return;
     }
     
@@ -238,6 +239,7 @@ void buscarCliente(NodeCliente **head){
     free(temp);
     if (cliente == NULL){
         printf("Cliente não foi encontrado.");
+        continuar();
         return;
     }
 

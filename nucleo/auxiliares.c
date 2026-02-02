@@ -15,13 +15,13 @@ void limpaConsole(void){
 }
 
 char* lerString(){
-    char* str = malloc(sizeof(char));
+    char* str = malloc(32*sizeof(char));
     if(str==NULL){
         perror("Erro ao alocar memoria em lerString()");
         exit(EXIT_FAILURE);
     }
     (*str) = '\0';
-    int letra, i=0, size=1;
+    int letra, i=0, size=32;
     while((letra=getchar())!=EOF && letra!='\n'){
         if(i>=(size-1)){
             size*=2;
