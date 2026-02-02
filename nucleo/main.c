@@ -2,6 +2,7 @@
 #include "produtos.h"
 #include "clientes.h"
 #include "compras.h"
+#include "testes.h"
 
 int menuPrincipal(NodeProduto**, NodeCliente**);
 void menuProdutos(NodeProduto**);
@@ -10,7 +11,7 @@ void modoCompra1(NodeProduto**, NodeCliente**);
 void modoCompra2(NodeProduto**, NodeCliente*);
 void encerrar(NodeProduto**, NodeCliente**);
 
-int main ()
+int main (int argc, char *argv[])
 {
     NodeProduto* listaProdutos = NULL;
     NodeCliente* listaClientes = malloc(sizeof(NodeCliente));
@@ -20,7 +21,9 @@ int main ()
     }
     listaClientes->data = NULL;
     listaClientes->proximo = NULL;
-    
+    if (argc > 1 && compararString(argv[1], "teste")){
+        objetosTeste(&listaProdutos,&listaClientes);
+    }
     menuPrincipal(&listaProdutos, &listaClientes);
 }
 
@@ -181,7 +184,7 @@ void modoCompra2(NodeProduto** produtos, NodeCliente* cliente){
             }
         }while(opcao<1 || opcao>5);
         switch(opcao){
-            case 1:listarProdutos(*produtos);continuar();break;
+            case 1:listarProdutos(*produtos);break;
             case 2:adicionarCarrinho(produtos, &(cliente->data->carrinho));break;
             case 3:removerCarrinho(&(cliente->data->carrinho), produtos);break;
             case 4:listarCarrinho(cliente->data->carrinho);break;

@@ -13,13 +13,15 @@
 ### Windows (Powershell):
 ```bash
     gcc nucleo/*.c -Wall -I./headers -o app.exe 
-    ./app.exe
+    ./app.exe #execução normal
+    ./app.exe testes #execução com objetos de teste
 ```
 
 ### Linux:
 ```bash
     gcc nucleo/*.c -Wall -I./headers -o app
-    ./app
+    ./app #execução normal
+    ./app testes #execução com objetos de teste
 ```
 
 ---
