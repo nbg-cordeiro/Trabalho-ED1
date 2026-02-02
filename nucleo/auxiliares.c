@@ -87,6 +87,34 @@ char* copiarString(char* original){
     return copia;
 }
 
+int validaEntradaNumero(char* string,int limite){
+    if (!string)
+        return 0;
+    if (tamanhoString(string) != (limite+1))
+        return 0;
+    for (int i = 0; i < (limite); i++){
+        if (string[i] < '0' || string[i] > '9')
+            return 0;
+    }
+    return 1;
+}
+
+int validaEntradaLetra(char* string){
+    if (!string)
+        return 0;
+    int size = tamanhoString(string);
+    for (int i = 0; i < (size-1); i++){
+        int minuscula = ((string[i] >= 'a') && (string[i] <= 'z'));
+        int maiuscula = ((string[i] >= 'A') && (string[i] <= 'Z'));
+        int espaco = (string[i] == ' ');
+
+        if (!(minuscula || maiuscula || espaco)){
+            return 0;
+        }
+    }
+    return 1;
+}
+
 void continuar(){
     printf("\nPressione enter para continuar.\n");
     getchar();
