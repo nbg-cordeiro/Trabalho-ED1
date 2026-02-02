@@ -15,7 +15,7 @@ int main (int argc, char *argv[])
 {
     NodeProduto* listaProdutos = NULL;
     NodeCliente* listaClientes = NULL;
-    if(argc>1 && compararString(argv[1],"teste"))
+    if(argc>1 && compararString(argv[1],"testes"))
         objetosTeste(&listaProdutos,&listaClientes);
     menuPrincipal(&listaProdutos, &listaClientes);
 }
