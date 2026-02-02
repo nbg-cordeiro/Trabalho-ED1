@@ -14,16 +14,9 @@ void encerrar(NodeProduto**, NodeCliente**);
 int main (int argc, char *argv[])
 {
     NodeProduto* listaProdutos = NULL;
-    NodeCliente* listaClientes = malloc(sizeof(NodeCliente));
-    if(listaClientes == NULL){
-        perror("Erro ao alocar memoria para lista de clientes em main().");
-        exit(EXIT_FAILURE);
-    }
-    listaClientes->data = NULL;
-    listaClientes->proximo = NULL;
-    if (argc > 1 && compararString(argv[1], "teste")){
+    NodeCliente* listaClientes = NULL;
+    if(argc>1 && compararString(argv[1],"teste"));
         objetosTeste(&listaProdutos,&listaClientes);
-    }
     menuPrincipal(&listaProdutos, &listaClientes);
 }
 
@@ -57,7 +50,7 @@ int menuPrincipal(NodeProduto** produtos, NodeCliente** clientes){
     }
 }
 
-void menuClientes(NodeCliente** head, NodeProduto** estoque){
+void menuClientes(NodeCliente** listaClientes, NodeProduto** estoque){
     while(1){
         limpaConsole();
         int opcao = -1;
@@ -82,11 +75,11 @@ void menuClientes(NodeCliente** head, NodeProduto** estoque){
 
         switch (opcao)
         {
-            case 1: criarCliente((*head)); break;
-            case 2: imprimirClientes(head); break;
-            case 3: buscarCliente(head); break;
-            case 4: editarCliente((*head)); break;
-            case 5: removerCliente(head, estoque);break;
+            case 1: criarCliente(listaClientes); break;
+            case 2: imprimirClientes((*listaClientes)); break;
+            case 3: buscarCliente(listaClientes); break;
+            case 4: editarCliente(listaClientes); break;
+            case 5: removerCliente(listaClientes, estoque);break;
             case 6: return;
         }
     }
@@ -129,13 +122,13 @@ void menuProdutos(NodeProduto** lista){
 void modoCompra1(NodeProduto** produtos, NodeCliente** clientes){
     while(1){
         limpaConsole();
-        if(produtos == NULL || *produtos == NULL || clientes == NULL || *clientes == NULL || (*clientes)->proximo == NULL){
+        if(produtos == NULL || *produtos == NULL || clientes == NULL || *clientes == NULL){
             printf("Nao existe nenhum produto ou cliente cadastrado.\n");
             continuar();
             return;
         }
         char* temp = NULL;
-        NodeCliente* cliente = NULL;
+        NodeCliente** cliente = NULL;
         do{
             printf("\n====== MODO COMPRA ======\n");
             printf("Para sair, digite \"sair\".\nPara continuar digite seu CPF.\n");
@@ -145,8 +138,8 @@ void modoCompra1(NodeProduto** produtos, NodeCliente** clientes){
                 temp=NULL;
                 return;
             }   
-            cliente = buscarCPF(temp, *clientes);
-            if(cliente==NULL){
+            cliente = buscarCPF(clientes,temp);
+            if(cliente==NULL || (*cliente) == NULL){
                 limpaConsole();
                 printf("Cliente com cpf \"%s\" nao encontrado!", temp);
                 free(temp);
@@ -156,7 +149,7 @@ void modoCompra1(NodeProduto** produtos, NodeCliente** clientes){
         free(temp);
         temp=NULL;
 
-        modoCompra2(produtos,cliente);
+        modoCompra2(produtos,(*cliente));
         cliente=NULL;
     }
 }
