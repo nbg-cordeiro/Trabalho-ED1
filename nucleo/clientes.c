@@ -216,7 +216,6 @@ void editarCliente(NodeCliente** listaClientes){
             break;
         case 2:
             do{
-                #warning ainda preciso fazer um counter caso insira o mesmo cpf na hora de modificar o cliente
                 printf("Insira o dado a seguir sem pontuacao ('/', '-' e/ou '.') e sem espacamento.\n");
                 printf("CPF: ");
                 temp = lerString();
@@ -225,7 +224,7 @@ void editarCliente(NodeCliente** listaClientes){
                     perror("Nao foi possivel alocar memoria em criarCliente().");
                     continue;
                 }
-                if (buscarCPF(listaClientes,temp) != NULL){
+                if ((buscarCPF(listaClientes,temp) != NULL) && (!compararString(temp,(*cliente)->data->cpf))){
                     printf("Esse CPF ja esta cadastrado!\n");
                     free(temp);
                     temp = NULL;
