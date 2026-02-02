@@ -42,7 +42,6 @@ void imprimePorCodigo(NodeProduto** lista){
 void listarProdutos(NodeProduto* lista){
     if(lista == NULL){
         printf("Nenhum produto cadastrado.\n");
-        continuar();
         return;
     }
     int i = 1;
