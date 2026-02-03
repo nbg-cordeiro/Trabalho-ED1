@@ -17,10 +17,31 @@ void InserirNode(NodeCliente** listaClientes, Cliente* dado){
 void imprimeCliente(Cliente* cliente){
     printf("%s", cliente->nome);
     printf("\n----------------------------\n");
-    printf("- CPF: %s\n", cliente->cpf);
-    printf("- Email: %s\n",cliente->email);
-    printf("- Telefone: %s\n", cliente->telefone);
-    printf("- Data de Nascimento: %s", cliente->dataNascimento);
+    printf("- CPF: ");
+    for (int k = 0; k < (tamanhoString(cliente->cpf)-1); k++){ //123.456.789-12
+        if (k == 3 || k == 6){
+            printf(".");
+        }
+        if (k == 9){
+            printf("-");
+        }
+        printf("%c",cliente->cpf[k]);
+    }
+    printf("\n- Email: %s\n",cliente->email);
+    printf("- Telefone: ");
+    for (int i = 0; i < (tamanhoString(cliente->telefone)-1); i++){ //61 9 12345678
+        if (i == 2 || i == 3){
+            printf(" ");
+        }
+        printf("%c",cliente->telefone[i]);
+    }
+    printf("\n- Data de Nascimento: "); //25/25/2012
+    for (int j = 0; j < (tamanhoString(cliente->dataNascimento)-1); j++){
+        if (j==2 || j==4){
+            printf("/");
+        }
+        printf("%c",cliente->dataNascimento[j]);
+    }
 
     printf("\n============================\n");
 }
