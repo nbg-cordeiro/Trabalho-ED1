@@ -23,6 +23,8 @@ char* lerString(){
     (*str) = '\0';
     int letra, i=0, size=32;
     while((letra=getchar())!=EOF && letra!='\n'){
+        if(letra==';')
+            letra=',';
         if(i>=(size-1)){
             size*=2;
             char* temp = realloc(str,size * sizeof(char));

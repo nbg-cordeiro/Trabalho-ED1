@@ -156,6 +156,8 @@ void adicionarCarrinho(NodeProduto** produtos, NodeProduto** carrinho){ //(ainda
 
 void removerCarrinho(NodeProduto** carrinho, NodeProduto** estoque){
     if (carrinho == NULL || (*carrinho) == NULL){
+        printf("Carrinho vazio!\n");
+        continuar();
         return;
     }
 

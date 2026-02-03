@@ -2,3 +2,4 @@ output/
 teste*
 *.exe
 .vscode/
+*.csv
