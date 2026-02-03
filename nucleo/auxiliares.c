@@ -124,7 +124,7 @@ int validaEmail(char* string){
         return 0;
     if (string[0] == '@')
         return 0;
-    if (string[tamanho-1] == '.')
+    if (string[tamanho-2] == '.')
         return 0;
 
     int arroba = 0;
