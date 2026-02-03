@@ -4,7 +4,7 @@
 void InserirNode(NodeCliente** listaClientes, Cliente* dado){
     NodeCliente *novoNode = malloc(sizeof(NodeCliente));
     if (novoNode == NULL){
-        perror("Erro ao alocar memória em InserirNode().");
+        perror("Erro ao alocar memoria em InserirNode().");
         exit(EXIT_FAILURE);
     }
 
@@ -67,7 +67,7 @@ void imprimirClientes(NodeCliente* listaClientes){
 void criarCliente(NodeCliente** listaClientes){
     Cliente* novoCliente = malloc(sizeof(Cliente));
     if (novoCliente == NULL){
-        perror("Erro ao alocar memória em criarCliente().");
+        perror("Erro ao alocar memoria em criarCliente().");
         exit(EXIT_FAILURE);
     }
 
@@ -388,7 +388,7 @@ void buscarCliente(NodeCliente** listaCliente){
     NodeCliente** cliente = buscarCPF(listaCliente, temp);
     free(temp);
     if (cliente == NULL || (*cliente) == NULL){
-        printf("Cliente não foi encontrado.");
+        printf("Cliente nao foi encontrado.");
         continuar();
         return;
     }

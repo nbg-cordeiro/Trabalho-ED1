@@ -1,3 +1,4 @@
+#include "persistencia.h"
 #include "auxiliares.h"
 #include "produtos.h"
 #include "clientes.h"
@@ -17,6 +18,11 @@ int main (int argc, char *argv[])
     NodeCliente* listaClientes = NULL;
     if(argc>1 && compararString(argv[1],"testes"))
         objetosTeste(&listaProdutos,&listaClientes);
+    else{
+        carregarProdutos(&listaProdutos);
+        carregarClientes(&listaClientes);
+        carregarCarrinhos(&listaClientes, &listaProdutos);
+    }
     menuPrincipal(&listaProdutos, &listaClientes);
 }
 
@@ -177,7 +183,7 @@ void modoCompra2(NodeProduto** produtos, NodeCliente* cliente){
             }
         }while(opcao<1 || opcao>5);
         switch(opcao){
-            case 1:listarProdutos(*produtos);break;
+            case 1:listarProdutos(*produtos);continuar();break;
             case 2:adicionarCarrinho(produtos, &(cliente->data->carrinho));break;
             case 3:removerCarrinho(&(cliente->data->carrinho), produtos);break;
             case 4:listarCarrinho(cliente->data->carrinho);break;
@@ -198,6 +204,9 @@ void encerrar(NodeProduto** produtos, NodeCliente** clientes){
         return;
     }
     free(resposta);
+    salvarProdutos(*produtos);
+    salvarClientes(*clientes);
+    salvarCarrinhos(*clientes);
     free_ListaClientes(clientes, produtos);
     freeProdutos(produtos);
     printf("Saindo...");
