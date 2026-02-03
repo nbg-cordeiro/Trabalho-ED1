@@ -7,6 +7,7 @@
 typedef struct Cliente{
     char* cpf;
     char* nome;
+    char* email;
     char* telefone;
     char* dataNascimento;
     NodeProduto* carrinho;

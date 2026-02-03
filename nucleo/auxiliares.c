@@ -115,6 +115,51 @@ int validaEntradaLetra(char* string){
     return 1;
 }
 
+int validaEmail(char* string){
+    if (!string)    
+        return 0;
+
+    int tamanho = tamanhoString(string);
+    if (tamanho < 5)
+        return 0;
+    if (string[0] == '@')
+        return 0;
+    if (string[tamanho-1] == '.')
+        return 0;
+
+    int arroba = 0;
+    int ponto = 0;
+
+    for (int index = 0; index < tamanho; index ++){
+       if (string[index] == '@'){
+            arroba++;
+            if (arroba > 1){
+                return 0;
+            }
+        }
+
+        if (string[index] == '.'){
+            if (arroba > 0 && string[index-1] == '@')
+                return 0;
+            
+            if (index > 0 && string[index-1] == '.')
+                return 0;
+
+            if (arroba == 1){
+                ponto = 1;
+            }
+
+        }  
+        
+    }
+
+    if (arroba == 1 && ponto == 1){
+        return 1;
+    }
+
+    return 0;
+}
+
 void continuar(){
     printf("\nPressione enter para continuar.\n");
     getchar();
