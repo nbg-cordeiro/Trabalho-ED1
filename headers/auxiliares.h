@@ -12,6 +12,7 @@ char* copiarString(char*);
 int tamanhoString(char*);
 int validaEntradaNumero(char*, int);
 int validaEntradaLetra(char*);
+int validaEmail(char*);
 void continuar(void);
 
 #endif
