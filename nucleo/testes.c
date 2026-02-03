@@ -47,7 +47,7 @@ void objetosTeste(NodeProduto** produtos, NodeCliente** clientes){
     int quantidades[]={0,1,5,10,20,50};
     double precos[]={199.99, 1.50, 0.60, 8.75, 5249.99, 10000.02};
     char cpf[][12]={"11111111111","22222222222","33333333333","44444444444","55555555555","66666666666"};
-    char* telefone[]={"61 935953053", "61 950345134", "62 967753421", "609 10670134", "99 999999999", "99 988776655"};
+    char* telefone[]={"61935953053", "61950345134", "62967753421", "60910670134", "99999999999", "99988776655"};
     char* email[]={"lucas.ub@email.com","eduardo@insee.web","joao.pedro@moj.com","gregh@mdhouse.org","pessonilson@comun.br","tes_teste@tst.tst"};
 
     for(int i=0; i<6; i++)
