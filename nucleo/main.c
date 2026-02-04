@@ -5,7 +5,7 @@
 #include "compras.h"
 #include "testes.h"
 
-int menuPrincipal(NodeProduto**, NodeCliente**);
+void menuPrincipal(NodeProduto**, NodeCliente**);
 void menuProdutos(NodeProduto**);
 void menuClientes(NodeCliente**, NodeProduto**);
 void modoCompra1(NodeProduto**, NodeCliente**);
@@ -26,12 +26,12 @@ int main (int argc, char *argv[])
     menuPrincipal(&listaProdutos, &listaClientes);
 }
 
-int menuPrincipal(NodeProduto** produtos, NodeCliente** clientes){
+void menuPrincipal(NodeProduto** produtos, NodeCliente** clientes){
     while(1){
         limpaConsole();
         int opcao=-1;
         do{
-            printf("\n====== MENU PRINCIPAL ======\n");
+            printf("\n===== Menu Principal =====\n");
             printf("1 - Gerenciamento de clientes\n");
             printf("2 - Gerenciamento de produtos\n");
             printf("3 - Modo de compra\n");
@@ -61,7 +61,7 @@ void menuClientes(NodeCliente** listaClientes, NodeProduto** estoque){
         limpaConsole();
         int opcao = -1;
         do{
-            printf("\n====== MENU CLIENTES ======\n");
+            printf("\n===== Menu Clientes =====\n");
             printf("1 - Cadastrar cliente\n");
             printf("2 - Listar clientes\n");
             printf("3 - Buscar cliente pelo CPF\n");
@@ -96,7 +96,7 @@ void menuProdutos(NodeProduto** lista){
         limpaConsole();
         int opcao=-1;
         do{
-            printf("\n====== MENU PRODUTOS ======\n");
+            printf("\n===== Menu Produtos =====\n");
             printf("1 - Cadastrar produto\n");
             printf("2 - Listar produtos\n");
             printf("3 - Buscar produto pelo codigo\n");
@@ -129,14 +129,16 @@ void modoCompra1(NodeProduto** produtos, NodeCliente** clientes){
     while(1){
         limpaConsole();
         if(produtos == NULL || *produtos == NULL || clientes == NULL || *clientes == NULL){
+            printf("\n================================================\n");
             printf("Nao existe nenhum produto ou cliente cadastrado.\n");
+            printf("\n================================================\n");
             continuar();
             return;
         }
         char* temp = NULL;
         NodeCliente** cliente = NULL;
         do{
-            printf("\n====== MODO COMPRA ======\n");
+            printf("\n===== Modo Compra =====\n");
             printf("Para sair, digite \"sair\".\nPara continuar digite seu CPF.\n");
             temp = lerString();
             if(compararString(temp,"sair")){
@@ -166,7 +168,7 @@ void modoCompra2(NodeProduto** produtos, NodeCliente* cliente){
         limpaConsole();
         int opcao=-1;
         do{
-            printf("\n====== MODO COMPRA ======\n");
+            printf("\n====== Modo Compra ======\n");
             printf("1 - Listar Produtos\n");
             printf("2 - Adicionar ao carrinho\n");
             printf("3 - Remover do carrinho\n");
@@ -194,6 +196,7 @@ void modoCompra2(NodeProduto** produtos, NodeCliente* cliente){
 
 void encerrar(NodeProduto** produtos, NodeCliente** clientes){
     limpaConsole();
+    printf("\n===== Encerrar =====\n");
     printf("Caso deseje sair, digite \"sair\"\n");
     char* resposta = lerString();
     if(!compararString(resposta, "sair")){
@@ -209,6 +212,7 @@ void encerrar(NodeProduto** produtos, NodeCliente** clientes){
     salvarCarrinhos(*clientes);
     free_ListaClientes(clientes, produtos);
     freeProdutos(produtos);
-    printf("Saindo...");
+    limpaConsole();
+    printf("\nSaindo...\n\n");
     exit(EXIT_SUCCESS);
 }

@@ -15,12 +15,15 @@ NodeProduto** buscarProduto(NodeProduto** lista, char* codigo){
 
 void imprimirProduto(Produto* produto){
     if(produto!=NULL)
-        printf("Cod: %s - Nome: %s - R$ %.2lf - Qtd: %d", produto->codigo, produto->nome, produto->preco, produto->quantidade);
+        printf("Cod.: %s - Nome: %s - R$ %.2lf - Qtd: %d", produto->codigo, produto->nome, produto->preco, produto->quantidade);
 }
 
 void imprimePorCodigo(NodeProduto** lista){
+    printf("\n===== Buscar Produto =====\n");
     if(lista == NULL || (*lista)==NULL){
+        printf("\n==========================\n");
         printf("Nenhum produto cadastrado.\n");
+        printf("\n==========================\n");
         continuar();
         return;
     }
@@ -29,7 +32,9 @@ void imprimePorCodigo(NodeProduto** lista){
     NodeProduto** produto1 = (buscarProduto(lista, codigo1));
     free(codigo1);
     if(produto1==NULL || (*produto1)==NULL){
+        printf("\n=======================\n");
         printf("Produto nao encontrado!\n");
+        printf("\n=======================\n");
         continuar();
         return;
     }
@@ -41,7 +46,9 @@ void imprimePorCodigo(NodeProduto** lista){
 
 void listarProdutos(NodeProduto* lista){
     if(lista == NULL){
+        printf("\n==========================\n");
         printf("Nenhum produto cadastrado.\n");
+        printf("\n===========================\n");
         return;
     }
     int i = 1;
@@ -63,7 +70,9 @@ void adicionarProduto(NodeProduto** lista){
     novoNode->produto=criarProduto(lista);
     novoNode->proximo=(*lista);
     (*lista)=novoNode;
+    printf("\n===============================\n");
     printf("Produto adicionado com sucesso!\n");
+    printf("\n===============================\n");
     continuar();
 }
 
@@ -73,9 +82,10 @@ Produto* criarProduto(NodeProduto** lista){
         perror("Erro ao alocar memoria em criarProduto()");
         exit(EXIT_FAILURE);
     }
+    printf("\n===== Adicionar Produto ======\n");
     char* codigo=NULL;
     do{
-        printf("Novo produto:\nCodigo: ");
+        printf("Codigo: ");
         codigo = lerString();
         if(buscarProduto(lista,codigo)!=NULL){
             printf("Este codigo ja existe!\n");
@@ -116,8 +126,11 @@ Produto* criarProduto(NodeProduto** lista){
 }
 
 void editarProduto(NodeProduto** lista){
+    printf("\n===== Editar Produto =====\n");
     if(lista == NULL || (*lista)==NULL){
+        printf("\n==========================\n");
         printf("Nenhum produto cadastrado.\n");
+        printf("\n==========================\n");
         continuar();
         return;
     }
@@ -126,13 +139,16 @@ void editarProduto(NodeProduto** lista){
     NodeProduto** node = (buscarProduto(lista, codigo));
     free(codigo);
     if(node==NULL || (*node)==NULL){
+        printf("\n=======================\n");
         printf("Produto nao encontrado!\n");
+        printf("\n=======================\n");
         continuar();
         return;
     }
     while(1){
         int opcao;
         do{
+            printf("\n===== Editar Produto =====\n");
             printf("Qual informacao gostaria de editar?\n");
             printf("1 - Codigo: %s\n", (*node)->produto->codigo);
             printf("2 - Nome: %s\n", (*node)->produto->nome);
@@ -141,12 +157,14 @@ void editarProduto(NodeProduto** lista){
             printf("5 - Voltar\n");
 
             int controle = scanf("%d", &opcao);
+            limpaConsole();
             limpaBuffer();
             if(controle!=1 || opcao<1 || opcao>5){
                 printf("Entrada invalida!\n");
                 opcao=-1;
             }
         }while(opcao<1 || opcao>5);
+        printf("\n===== Editar Produto =====\n");
         double preco;
         char* temp;
         int control, quantidade;
@@ -198,15 +216,20 @@ void editarProduto(NodeProduto** lista){
             default:
                 return;
         }
+        printf("\n============================\n");
         printf("Produto editado com sucesso!\n");
+        printf("\n============================\n");
         imprimirProduto((*node)->produto);
         continuar();
     }
 }
 
 void removerProduto(NodeProduto** lista){
+    printf("\n===== Remover Produto =====\n");
     if(lista == NULL || (*lista)==NULL){
+        printf("\n==========================\n");
         printf("Nenhum produto cadastrado.\n");
+        printf("\n==========================\n");
         continuar();
         return;
     }
@@ -215,7 +238,9 @@ void removerProduto(NodeProduto** lista){
     NodeProduto** node = (buscarProduto(lista, codigo));
     free(codigo);
     if(node==NULL || (*node)==NULL){
-    printf("Produto nao encontrado!\n");
+        printf("\n=======================\n");
+        printf("Produto nao encontrado!\n");
+        printf("\n=======================\n");
         continuar();
         return;
     }
@@ -232,8 +257,9 @@ void removerProduto(NodeProduto** lista){
 
     free(*node);
     (*node)=aux;
-
+    printf("\n=============================\n");
     printf("Produto removido com sucesso!\n");
+    printf("\n=============================\n");
     continuar();
 }
 

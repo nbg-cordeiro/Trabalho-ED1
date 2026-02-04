@@ -26,6 +26,25 @@
 
 ---
 
+## Estrutura do Projeto
+
+Trabalho-ED1/
+├── dados/              # Onde os arquivos de persistência (.csv) serão gerados e lidos.
+│
+├── headers/            # Onde os headers referentes a cada arquivo ".c" são armazenados.
+│
+└── nucleo/             # Onde todos os arquivos ".c" estão armazenados.
+    │
+    ├── main.c          # Contém os principais menus de navegação, assim como a main().
+    ├── produtos.c      # Contém todo o CRUD de produtos e menus auxiliares relacionados aos produtos.
+    ├── cliente.c       # Contém todo o CRUD de clientes e menus auxiliares relacionados aos clientes.
+    ├── compras.c       # Contém todas as funções relacionadas ao Modo Compra e Carrinhos.
+    ├── auxiliares.c    # Contém as funções gerais utilizadas em outros arquivos (Ex: copiarString()).
+    ├── persistencia.c  # Contém as funções de leitura e escrita em arquivos, direcionadas a persistência de dados.
+    └── testes.c        # Contém as funções do Modo Teste, com intuito de gerar objetos teste.
+
+---
+
 ## Descrição
 
 Uma empresa de pequeno porte deseja informatizar o controle básico de **clientes** e **produtos** por meio de uma aplicação simples executada no **terminal**.

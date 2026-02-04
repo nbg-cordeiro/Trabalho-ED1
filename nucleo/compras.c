@@ -3,7 +3,9 @@
 void listarCarrinho(NodeProduto* carrinho){
     limpaConsole();
     if(carrinho==NULL){
+        printf("\n===============\n");
         printf("Carrinho vazio!\n");
+        printf("\n===============\n");
         continuar();
         return;
     }
@@ -15,7 +17,9 @@ void listarCarrinho(NodeProduto* carrinho){
 
 void adicionarCarrinho(NodeProduto** produtos, NodeProduto** carrinho){ //(ainda acho importante verificar se o produto existe no estoque primeiro)
     if(produtos==NULL || (*produtos)==NULL){
+        printf("\n==========================\n");
         printf("Nenhum produto cadastrado.\n");
+        printf("\n==========================\n");
         continuar();
         return;
     }
@@ -23,6 +27,7 @@ void adicionarCarrinho(NodeProduto** produtos, NodeProduto** carrinho){ //(ainda
     char* temp = NULL;
     NodeProduto** original = NULL;
     do{
+        printf("\n===== Adicionar ao Carrinho =====\n");
         printf("Digite \"sair\" para cancelar ou insira o codigo do produto: ");
         temp = lerString();
         if(compararString(temp, "sair")){
@@ -43,6 +48,7 @@ void adicionarCarrinho(NodeProduto** produtos, NodeProduto** carrinho){ //(ainda
     free(temp);
     temp=NULL;
     if(existente!=NULL){
+        printf("\n===== Adicionar ao Carrinho =====\n");
         printf("Esse produto ja esta no seu carrinho.\nO que deseja fazer?\n1 - Alterar quantidade\n2 - Voltar\n");
         int opcao;
         do{
@@ -53,8 +59,10 @@ void adicionarCarrinho(NodeProduto** produtos, NodeProduto** carrinho){ //(ainda
                 opcao=-1;
         }   
         }while(opcao<1 || opcao>2);
+        limpaConsole();
         if(opcao==1){
             do{
+                printf("\n===== Adicionar ao Carrinho =====\n");
                 printf("Quantidade atual: %d\n", (*existente)->produto->quantidade);
                 printf("Quantidade em estoque: %d\n", (*original)->produto->quantidade);
                 printf("O que deseja fazer?\n");
@@ -74,6 +82,7 @@ void adicionarCarrinho(NodeProduto** produtos, NodeProduto** carrinho){ //(ainda
             }
             int quantidade=-1;
             do{
+                printf("\n===== Adicionar ao Carrinho =====\n");
                 printf("Estoque disponivel: %d\n", (*original)->produto->quantidade + (*existente)->produto->quantidade);
                 printf("Insira \"0\" para cancelar.\n");
                 printf("Insira a nova quantidade: ");
@@ -86,7 +95,9 @@ void adicionarCarrinho(NodeProduto** produtos, NodeProduto** carrinho){ //(ainda
                 }
             }while(quantidade<0);
             if(quantidade==0){
+                printf("\n====================\n");
                 printf("Alteracao cancelada!\n");
+                printf("\n====================\n");
                 continuar();
                 return;
             }
@@ -94,7 +105,9 @@ void adicionarCarrinho(NodeProduto** produtos, NodeProduto** carrinho){ //(ainda
             (*existente)->produto->quantidade = (quantidade);
             (*original)->produto->quantidade -= quantidade;
             limpaConsole();
+            printf("\n================================\n");
             printf("Quantidade alterada com sucesso!\n");
+            printf("\n================================\n");
             continuar();
         }
         return;
@@ -124,15 +137,21 @@ void adicionarCarrinho(NodeProduto** produtos, NodeProduto** carrinho){ //(ainda
         limpaBuffer();
         if(control!=1 || quantidade<0){
             quantidade=-1;
+            printf("\n=================\n");
             printf("Entrada invalida!\n");
+            printf("\n=================\n");
         }else if(quantidade>(*original)->produto->quantidade){
             quantidade=-1;
+            printf("\n============================================\n");
             printf("Nao existem produtos suficientes em estoque!");
+            printf("\n============================================\n");
         }
     }while(quantidade<0);
 
     if(quantidade==0){
+        printf("\n=============================\n");
         printf("Adicao ao carrinho cancelada!\n");
+        printf("\n=============================\n");
         free(novoProduto->produto->codigo);
         novoProduto->produto->codigo = NULL;
         free(novoProduto->produto->nome);
@@ -149,22 +168,25 @@ void adicionarCarrinho(NodeProduto** produtos, NodeProduto** carrinho){ //(ainda
 
     novoProduto->proximo=(*carrinho);
     (*carrinho)=novoProduto;
-
+    printf("\n==============================\n");
     printf("Produto adicionado com sucesso!\n");
+    printf("\n==============================\n");
     continuar();
 }
 
 void removerCarrinho(NodeProduto** carrinho, NodeProduto** estoque){
     if (carrinho == NULL || (*carrinho) == NULL){
+        printf("\n===============\n");
         printf("Carrinho vazio!\n");
+        printf("\n===============\n");
         continuar();
         return;
     }
 
     char * temp = NULL;
-    printf("Remover do carrinho\n");
     NodeProduto** del_carrinho = NULL;
     do{
+        printf("\n===== Remover do Carrinho =====\n");
         printf("Digite o codigo do produto a ser removido: ");
         temp = lerString();
         limpaConsole();
@@ -200,8 +222,9 @@ void removerCarrinho(NodeProduto** carrinho, NodeProduto** estoque){
 
         free(*del_carrinho);
         *del_carrinho = aux;
-        
+        printf("\n============================\n");
         printf("Produto removido do carrinho.");
+        printf("\n============================\n");
 
         continuar();
     }    

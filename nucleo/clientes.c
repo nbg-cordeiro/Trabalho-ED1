@@ -50,6 +50,7 @@ void imprimirClientes(NodeCliente* listaClientes){
     printf("\n====== LISTA CLIENTES ======\n");
 
     if (listaClientes == NULL){
+        printf("\n============================\n");
         printf("\nNenhum cliente cadastrado.\n");
         printf("\n============================\n");
         continuar();
@@ -75,22 +76,11 @@ void criarCliente(NodeCliente** listaClientes){
 
     char* nome = NULL;
     do{
-        printf("Insira o dado a seguir sem pontuacao ('/', '-' e/ou '.') e sem numeros.\n");
+        printf("Insira o dado a seguir sem pontuacao e sem numeros.\n");
         printf("Nome: ");
         nome = lerString();
-
-        if (nome == NULL){
-            perror("Nao foi possivel alocar memoria em criarCliente().");
-            continue;
-        }
         
-        if (*nome == '\0'){
-            printf("Entrada invalida. Tente novamente.\n");
-            free(nome);
-            nome = NULL;
-        }
-
-        if (!validaEntradaLetra(nome)){
+        if (*nome == '\0' || !validaEntradaLetra(nome)){
             printf("Entrada invalida. Tente novamente.\n");
             free(nome);
             nome = NULL;
@@ -101,14 +91,10 @@ void criarCliente(NodeCliente** listaClientes){
     char* cpf = NULL;
     do
     {
-        printf("Insira o dado a seguir sem pontuacao ('/', '-' e/ou '.') e sem espacamento.\n");
+        printf("Insira o dado a seguir sem pontuacao e sem espacamento.\n");
         printf("CPF: ");
         cpf = lerString();
 
-        if (cpf == NULL){
-            perror("Nao foi possivel alocar memoria em criarCliente().");
-            continue;
-        }
         if (buscarCPF(listaClientes,cpf) != NULL){
             printf("Esse CPF ja esta cadastrado!\n");
             free(cpf);
@@ -126,13 +112,10 @@ void criarCliente(NodeCliente** listaClientes){
     char* email = NULL;
     do
     {
+        printf("Insira o email no formato 'email@dominio.dominiodetopo'.\n");
         printf("email: ");
         email = lerString();
 
-        if (email == NULL){
-            perror("Nao foi possivel alocar memoria em criarCliente().");
-            continue;
-        }
         if (!validaEmail(email)){
             printf("Entrada invalida. Tente novamente.\n");
             free(email);
@@ -144,13 +127,9 @@ void criarCliente(NodeCliente** listaClientes){
 
     char* telefone = NULL;
     do{
-        printf("Insira o dado a seguir sem pontuacao ('/', '-' e/ou '.') e sem espacamento.\n");
+        printf("Insira o dado a seguir sem pontuacao e sem espacamento.\n");
         printf("Telefone de contato (DDD)9xxxx-xxxx: ");
         telefone = lerString();
-        if (telefone == NULL){
-            perror("Nao foi possivel alocar memoria em criarCliente().");
-            continue;
-        }
         if (!validaEntradaNumero(telefone,11)){
             printf("Entrada invalida. Tente novamente.\n");
             free(telefone);
@@ -161,13 +140,9 @@ void criarCliente(NodeCliente** listaClientes){
 
     char* aniversario = NULL;
     do{
-        printf("Insira o dado a seguir sem pontuacao ('/', '-' e/ou '.') e sem espacamento.\n");
+        printf("Insira o dado a seguir sem pontuacao e sem espacamento.\n");
         printf("Data de nascimento (DDMMAAAA): ");
         aniversario = lerString();
-        if (aniversario == NULL){
-            perror("Nao foi possivel alocar memoria em criarCliente().");
-            continue;
-        }
         if (!validaEntradaNumero(aniversario,8)){
             printf("Entrada invalida. Tente novamente.\n");
             free(aniversario);
@@ -192,14 +167,16 @@ void editarCliente(NodeCliente** listaClientes){
     }
 
     char *cpf = NULL;
-    printf("Nao utilize pontuacoes ('/' '.' '-') ou espaco.\n");
+    printf("Nao utilize pontuacoes ou espaco.\n");
     printf("Digite o CPF do cliente: ");
     cpf = lerString();
     NodeCliente **cliente = buscarCPF(listaClientes, cpf);
     free(cpf);
 
     if (cliente == NULL || (*cliente) == NULL){
-        printf("Cliente nao cadastrado no sistema.");
+        printf("\n==================================\n");
+        printf("Cliente nao cadastrado no sistema.\n");
+        printf("\n==================================\n");
         continuar();
         return;
     }
@@ -207,7 +184,7 @@ void editarCliente(NodeCliente** listaClientes){
     while (1){
         int opcao=-1;
         do{
-            printf("\n====== GERENCIAMENTO DE CLIENTES | EDITAR CLIENTE ======\n");
+            printf("\n====== Editar Cliente ======\n");
             printf("1 - Editar nome do cliente\n");
             printf("2 - Editar CPF do cliente\n");
             printf("3 - Editar email do cliente\n");
@@ -226,20 +203,16 @@ void editarCliente(NodeCliente** listaClientes){
         }while(opcao<1 || opcao>6);
     
         char * temp = NULL;
-
+        limpaConsole();
         switch (opcao)
         {
         case 1:
             do{
-                printf("Insira o dado a seguir sem pontuacao ('/', '-' e/ou '.') e sem numeros.\n");
+                printf("\n===== Editar Cliente =====\n");
+                printf("Insira o dado a seguir sem pontuacao e sem numeros.\n");
                 printf("Nome: ");
                 temp = lerString();
 
-                if (temp == NULL){
-                    perror("Nao foi possivel alocar memoria em criarCliente().");
-                    continue;
-                }
-                
                 if (*temp == '\0'){
                     printf("Entrada invalida. Tente novamente.\n");
                     free(temp);
@@ -259,14 +232,11 @@ void editarCliente(NodeCliente** listaClientes){
             break;
         case 2:
             do{
-                printf("Insira o dado a seguir sem pontuacao ('/', '-' e/ou '.') e sem espacamento.\n");
+                printf("\n===== Editar Cliente =====\n");
+                printf("Insira o dado a seguir sem pontuacao e sem espacamento.\n");
                 printf("CPF: ");
                 temp = lerString();
 
-                if (temp == NULL){
-                    perror("Nao foi possivel alocar memoria em criarCliente().");
-                    continue;
-                }
                 if ((buscarCPF(listaClientes,temp) != NULL) && (!compararString(temp,(*cliente)->data->cpf))){
                     printf("Esse CPF ja esta cadastrado!\n");
                     free(temp);
@@ -286,13 +256,11 @@ void editarCliente(NodeCliente** listaClientes){
         case 3:
             do
             {
+                printf("\n===== Editar Cliente =====\n");
+                printf("Insira o email no formato 'email@dominio.dominiodetopo'.\n");
                 printf("email: ");
                 temp = lerString();
 
-                if (temp == NULL){
-                    perror("Nao foi possivel alocar memoria em criarCliente().");
-                    continue;
-                }
                 if (!validaEmail(temp)){
                     printf("Entrada invalida. Tente novamente.\n");
                     free(temp);
@@ -306,13 +274,11 @@ void editarCliente(NodeCliente** listaClientes){
             break;
         case 4:
             do{
-                printf("Insira o dado a seguir sem pontuacao ('/', '-' e/ou '.') e sem espacamento.\n");
+                printf("\n===== Editar Cliente =====\n");
+                printf("Insira o dado a seguir sem pontuacao e sem espacamento.\n");
                 printf("Telefone de contato (DDD)9xxxx-xxxx: ");
                 temp = lerString();
-                if (temp == NULL){
-                    printf("Nao foi possivel alocar memoria em criarCliente().");
-                    continue;
-                }
+
                 if (!validaEntradaNumero(temp,11)){
                     printf("Entrada invalida. Tente novamente.\n");
                     free(temp);
@@ -325,15 +291,11 @@ void editarCliente(NodeCliente** listaClientes){
 
             break;
         case 5:
-
             do{
-                printf("Insira o dado a seguir sem pontuacao ('/', '-' e/ou '.') e sem espacamento.\n");
+                printf("\n===== Editar Cliente =====\n");
+                printf("Insira o dado a seguir sem pontuacao e sem espacamento.\n");
                 printf("Data de nascimento (DDMMAAAA): ");
                 temp = lerString();
-                if (temp == NULL){
-                    perror("Nao foi possivel alocar memoria em criarCliente().");
-                    continue;
-                }
                 if (!validaEntradaNumero(temp,8)){
                     printf("Entrada invalida. Tente novamente.\n");
                     free(temp);
@@ -348,8 +310,9 @@ void editarCliente(NodeCliente** listaClientes){
         default:
             return;
         }
-    
-    printf("\nDado atualizado com exito.\n\n");
+
+    printf("\n==========================\n");
+    printf("Dado atualizado com exito.\n\n");
     imprimeCliente((*cliente)->data);
     continuar();
     }
@@ -371,13 +334,15 @@ NodeCliente** buscarCPF(NodeCliente** listaCliente,char* cpf){
 
 void buscarCliente(NodeCliente** listaCliente){
     if (listaCliente == NULL || (*listaCliente) == NULL){
+        printf("\n==========================\n");
         printf("Nenhum cliente cadastrado.\n");
+        printf("\n==========================\n");
         continuar();
         return;
     }
 
-    printf("\nBuscar Cliente:\n");
-    printf("Nao utilize nenhuma acentuacao ('/', '-', '.') ou espacamento.\n");
+    printf("\n===== Buscar Cliente =====\n");
+    printf("Nao utilize nenhuma pontuacao ou espacamento.\n");
     printf("- Digite o CPF do cliente: ");
 
     char * temp = lerString();
@@ -388,7 +353,9 @@ void buscarCliente(NodeCliente** listaCliente){
     NodeCliente** cliente = buscarCPF(listaCliente, temp);
     free(temp);
     if (cliente == NULL || (*cliente) == NULL){
-        printf("Cliente nao foi encontrado.");
+        printf("\n===========================\n");
+        printf("Cliente nao foi encontrado.\n");
+        printf("\n===========================\n");
         continuar();
         return;
     }
@@ -415,22 +382,19 @@ void removerCliente(NodeCliente** listaCliente, NodeProduto** estoque){
         return;
     }
 
-    printf("\nRemover Cliente:\n");
-    printf("Nao utilize nenhuma acentuacao ('/', '-', '.') ou espacamento.\n");
+    printf("\n===== Remover Cliente =====\n");
+    printf("Nao utilize nenhuma pontuacao ou espacamento.\n");
     printf("- Digite o CPF do cliente: ");
 
     char * temp = lerString();
-
-    if (temp == NULL){
-        perror("Erro ao alocar memoria em removerCliente():lerString().");
-        return;
-    }
 
     NodeCliente** nodeDelete = buscarCPF(listaCliente,temp);
     free(temp);
 
     if (nodeDelete == NULL || (*nodeDelete) == NULL){
-        printf("CPF inserido nao esta cadastrado.");
+        printf("\n=================================\n");
+        printf("CPF inserido nao esta cadastrado.\n");
+        printf("\n=================================\n");
         continuar();
         return;
     }
